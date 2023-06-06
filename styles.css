@@ -1,0 +1,83 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: "Raleway", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: midnightblue;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+h1 a {
+  color: white;
+  text-decoration: none;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  padding: 20px;
+}
+
+#home .hero-image {
+  text-align: center;
+  margin-top: 50px;
+}
+
+#home .hero-image img {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+#home .hero-image h2 {
+  font-size: 36px;
+  margin-top: 20px;
+}
+
+#about .about-me {
+  text-align: center;
+  margin-top: 50px;
+}
+
+#about .about-me img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+#about .about-me h2 {
+  font-size: 36px;
+  margin-top: 20px;
+}
+
+#gallery h2 {
+  font-size: 36px;
+  margin-top: 50px;
+}

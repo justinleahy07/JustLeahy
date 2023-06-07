@@ -6,12 +6,13 @@
   <link rel="stylesheet" href="styles.css">
   <title>Justin Leahy - Photography Portfolio</title>
   <style>
-    /* Center the image */
-    .centered-image {
+    /* Center the page */
+    html, body {
+      height: 100%;
+      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh; /* Adjust this value to fit your needs */
     }
   </style>
 </head>
@@ -27,10 +28,11 @@
     </nav>
   </header>
   <main id="home">
+   <div class="page-container">
       <h2>Welcome.</h2>
-  <div class="centered-image">
-    <img src="image.jpg" alt="Your Image" width="600" height="400">
-    </div>
+ <img src="image.jpg" alt="Your Image" width="600" height="400">
+    <p>Coming Soon...</p>
+  </div>
   </main>
   <footer>
     <p>© Justin Leahy 2023 | JPL</p>

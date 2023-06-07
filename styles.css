@@ -7,7 +7,7 @@
 
 /* Global Styles */
 body {
-  background-color: black;
+  background-color: #7B9DA7;
   color: white;
   font-family: "Raleway", sans-serif;
   font-size: 16px;
@@ -20,7 +20,7 @@ a {
 }
 
 header {
-  background-color: #191170;
+  background-color: #83A27F;
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -50,7 +50,7 @@ main {
 }
 
 footer {
-  background-color: #191170;
+  background-color: #83A27F;
   padding: 20px;
   text-align: center;
 }
@@ -138,5 +138,5 @@ footer p {
 }
 
 .dropdown-content a:hover {
-  background-color: #000080;
+  background-color: #83A27F;
 }

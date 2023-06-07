@@ -12,7 +12,6 @@ body {
   font-family: "Raleway", sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  text-align: center;
 }
 
 a {
@@ -174,7 +173,7 @@ nav ul ul.dropdown {
   display: none;
   position: absolute;
   background-color: #83A27F;
-  padding: 10;
+  padding: 20;
 }
 
 nav ul ul.dropdown li {

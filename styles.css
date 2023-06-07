@@ -173,12 +173,12 @@ nav ul ul.dropdown {
   display: none;
   position: absolute;
   background-color: #83A27F;
-  padding: 20;
+  padding: 10;
 }
 
 nav ul ul.dropdown li {
   display: block;
-  width: 225px;
+  width: 150px;
 }
 
 nav ul ul.dropdown li a {

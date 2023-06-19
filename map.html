@@ -39,68 +39,71 @@
       </div>
     </nav>
   </header>
-<body>
+
   <main id="map-page">
-  <!-- Map page content -->
-  <h1>Photography Geography</h1>
-  <!-- Rest of the map page content -->
-  <div id="map"></div>
+    <!-- Map page content -->
+    <h1>Photography Geography</h1>
+    <!-- Rest of the map page content -->
+    <div id="map"></div>
 
-  <script>
-     function initMap() {
-    // Define an array of pinpoints with their coordinates and captions
-    var pinpoints = [
-      {
-        position: { lat: 33.8734, lng: -115.9010 },
-        caption: 'Joshua Tree National Park',
-        link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
-      },
-      {
-        position: { lat: 51.1784, lng: -115.5708 },
-        caption: 'Banff National Park',
-        link: 'banff.html' // Replace with the link to the page with photos taken at this location
-      },
-      // Add more pinpoints as per your requirement
-    ];
+    <script>
+      function initMap() {
+        // Define an array of pinpoints with their coordinates and captions
+        var pinpoints = [
+          {
+            position: { lat: 33.8734, lng: -115.9010 },
+            caption: 'Joshua Tree National Park',
+            link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 51.1784, lng: -115.5708 },
+            caption: 'Banff National Park',
+            link: 'banff.html' // Replace with the link to the page with photos taken at this location
+          },
+          // Add more pinpoints as per your requirement
+        ];
 
-    // Calculate the geographical center of the pinpoints
-    var bounds = new google.maps.LatLngBounds();
-    for (var i = 0; i < pinpoints.length; i++) {
-      bounds.extend(pinpoints[i].position);
-    }
-    var center = bounds.getCenter();
+        // Calculate the geographical center of the pinpoints
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < pinpoints.length; i++) {
+          bounds.extend(pinpoints[i].position);
+        }
+        var center = bounds.getCenter();
 
-    // Create a map centered at the geographical center of the pinpoints
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: center,
-      zoom: 10 // Adjust the zoom level as per your preference
-    });
+        // Create a map centered at the geographical center of the pinpoints
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: center,
+          zoom: 10 // Adjust the zoom level as per your preference
+        });
 
-    // Iterate through the pinpoints array and add markers to the map
-    for (var i = 0; i < pinpoints.length; i++) {
-      var pinpoint = pinpoints[i];
+        // Iterate through the pinpoints array and add markers to the map
+        for (var i = 0; i < pinpoints.length; i++) {
+          var pinpoint = pinpoints[i];
 
-      // Create a marker with the specified position
-      var marker = new google.maps.Marker({
-        position: pinpoint.position,
-        map: map,
-        title: pinpoint.caption
-      });
+          // Create a marker with the specified position
+          var marker = new google.maps.Marker({
+            position: pinpoint.position,
+            map: map,
+            title: pinpoint.caption
+          });
 
-      // Add an event listener to redirect to the specified page when the marker is clicked
-      marker.addListener('click', function() {
-        window.location.href = pinpoint.link;
-      });
-    }
+          // Add an event listener to redirect to the specified page when the marker is clicked
+          marker.addListener('click', function() {
+            window.location.href = pinpoint.link;
+          });
+        }
 
-    // Fit the map to the bounds of all the pinpoints
-    map.fitBounds(bounds);
-  }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap" async defer></script>
-    </main>
-</body>
+        // Fit the map to the bounds of all the pinpoints
+        map.fitBounds(bounds);
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap" async defer></script>
+  </main>
+
   <footer>
     <p>© Justin Leahy 2023 | JPL</p>
   </footer>
+
+</body>
 </html>
+

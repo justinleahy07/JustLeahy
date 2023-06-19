@@ -235,3 +235,13 @@ header {
   font-size: 36px;
   margin-top: 20px;
 }
+
+.logo {
+  cursor: pointer;
+}
+
+.logo:hover {
+  color: #fff9c4;
+}
+
+

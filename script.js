@@ -128,48 +128,54 @@ rows.forEach((row) => {
   observer.observe(row);
 });
 
-// Load the Google Maps API
-function loadMapScript() {
-  const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap`;
-  script.defer = true;
-  script.async = true;
-  document.head.appendChild(script);
-}
 
-// Initialize the map
-function initMap() {
-  const mapOptions = {
-    center: { lat: 0, lng: 0 },
-    zoom: 2,
-  };
 
-  // Create the map
-  const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+ function initMap() {
+    // Define an array of pinpoints with their coordinates and captions
+    var pinpoints = [
+      {
+        position: { lat: 40.7128, lng: -74.0060 },
+        caption: 'New York City, USA',
+        link: 'nyc.html' // Replace with the link to the page with photos taken at this location
+      },
+      {
+        position: { lat: 51.5074, lng: -0.1278 },
+        caption: 'London, UK',
+        link: 'london.html' // Replace with the link to the page with photos taken at this location
+      },
+      // Add more pinpoints as per your requirement
+    ];
 
-  // Define the pinpoints
-  const pinpoints = [
-    { lat: 40.712776, lng: -74.005974, caption: "New York City" },
-    { lat: 51.5074, lng: -0.1278, caption: "London" },
-    // Add more pinpoints here
-  ];
+    // Calculate the geographical center of the pinpoints
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < pinpoints.length; i++) {
+      bounds.extend(pinpoints[i].position);
+    }
+    var center = bounds.getCenter();
 
-  // Create the pinpoints on the map
-  pinpoints.forEach((pinpoint) => {
-    const marker = new google.maps.Marker({
-      position: { lat: pinpoint.lat, lng: pinpoint.lng },
-      map: map,
-      title: pinpoint.caption,
+    // Create a map centered at the geographical center of the pinpoints
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: center,
+      zoom: 10 // Adjust the zoom level as per your preference
     });
 
-    // Add a click event listener to each marker
-    marker.addListener("click", function () {
-      // Redirect to the specific page for the clicked pinpoint
-      window.location.href = `photos.html?location=${encodeURIComponent(pinpoint.caption)}`;
-    });
-  });
-}
+    // Iterate through the pinpoints array and add markers to the map
+    for (var i = 0; i < pinpoints.length; i++) {
+      var pinpoint = pinpoints[i];
 
-// Load the map script when the page finishes loading
-window.addEventListener("load", loadMapScript);
+      // Create a marker with the specified position
+      var marker = new google.maps.Marker({
+        position: pinpoint.position,
+        map: map,
+        title: pinpoint.caption
+      });
 
+      // Add an event listener to redirect to the specified page when the marker is clicked
+      marker.addListener('click', function() {
+        window.location.href = pinpoint.link;
+      });
+    }
+
+    // Fit the map to the bounds of all the pinpoints
+    map.fitBounds(bounds);
+  }

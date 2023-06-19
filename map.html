@@ -88,9 +88,11 @@
           });
 
           // Add an event listener to redirect to the specified page when the marker is clicked
-          marker.addListener('click', function() {
-            window.location.href = pinpoint.link;
-          });
+          marker.addListener('click', function(pinpoint) {
+            return function() {
+              window.location.href = pinpoint.link;
+            };
+          }(pinpoint));
         }
 
         // Fit the map to the bounds of all the pinpoints
@@ -106,4 +108,3 @@
 
 </body>
 </html>
-

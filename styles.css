@@ -244,4 +244,55 @@ header {
   color: #fff9c4;
 }
 
+/* Mobile Header */
+.mobile-header {
+  background-color: #83A27F;
+  color: white;
+  padding: 20px;
+}
+
+.mobile-header .logo {
+  color: white;
+  font-size: 20px;
+}
+
+.mobile-header .menu-icon {
+  color: white;
+  font-size: 24px;
+}
+
+.mobile-header .menu-icon:hover {
+  cursor: pointer;
+}
+
+.mobile-header .menu {
+  display: none;
+  list-style-type: none;
+}
+
+.mobile-header .menu li {
+  margin-bottom: 10px;
+}
+
+.mobile-header .menu li a {
+  color: white;
+  text-decoration: none;
+}
+
+.mobile-header .menu-icon.active + .menu {
+  display: block;
+}
+
+/* Footer */
+footer {
+  background-color: #83A27F;
+  padding: 20px;
+  text-align: center;
+}
+
+footer p {
+  font-size: 14px;
+  margin: 0;
+  color: white;
+}
 

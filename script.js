@@ -134,3 +134,11 @@ document.querySelector('.menu-icon').addEventListener('click', function() {
   document.querySelector('.menu').classList.toggle('show');
 });
 
+// Toggle Mobile Sidebar
+document.querySelector('.menu-icon').addEventListener('click', function() {
+  document.querySelector('.mobile-sidebar').classList.toggle('show');
+});
+
+
+
+

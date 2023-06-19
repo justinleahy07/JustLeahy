@@ -128,38 +128,48 @@ rows.forEach((row) => {
   observer.observe(row);
 });
 
-// Initialize and display the map
+// Load the Google Maps API
+function loadMapScript() {
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap`;
+  script.defer = true;
+  script.async = true;
+  document.head.appendChild(script);
+}
+
+// Initialize the map
 function initMap() {
-  // Coordinates for the center of the map
-  var center = { lat: 40.7128, lng: -74.0060 };
+  const mapOptions = {
+    center: { lat: 0, lng: 0 },
+    zoom: 2,
+  };
 
-  // Create the map object
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: center,
-    zoom: 8
-  });
+  // Create the map
+  const map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-  // Array of pinpoints with location and caption
-  var pinpoints = [
-    { lat: 40.7128, lng: -74.0060, caption: 'New York City' },
-    { lat: 34.0522, lng: -118.2437, caption: 'Los Angeles' },
-    // Add more pinpoints as needed
+  // Define the pinpoints
+  const pinpoints = [
+    { lat: 40.712776, lng: -74.005974, caption: "New York City" },
+    { lat: 51.5074, lng: -0.1278, caption: "London" },
+    // Add more pinpoints here
   ];
 
-  // Create and display the pinpoints on the map
-  pinpoints.forEach(function (pinpoint) {
-    var marker = new google.maps.Marker({
-      position: pinpoint,
+  // Create the pinpoints on the map
+  pinpoints.forEach((pinpoint) => {
+    const marker = new google.maps.Marker({
+      position: { lat: pinpoint.lat, lng: pinpoint.lng },
       map: map,
-      title: pinpoint.caption
+      title: pinpoint.caption,
     });
 
-    // Redirect to a page with pictures when a pinpoint is clicked
-    marker.addListener('click', function () {
-      // Redirect to the page for the specific location
-      window.location.href = 'location.html?location=' + encodeURIComponent(pinpoint.caption);
+    // Add a click event listener to each marker
+    marker.addListener("click", function () {
+      // Redirect to the specific page for the clicked pinpoint
+      window.location.href = `photos.html?location=${encodeURIComponent(pinpoint.caption)}`;
     });
   });
 }
 
+// Load the map script when the page finishes loading
+window.addEventListener("load", loadMapScript);
 

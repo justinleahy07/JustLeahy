@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-SFH8SW31QP');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Justin Leahy - Portfolio</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="header-left">
+        <div class="logo">
+          <a href="index.html">Justin Leahy</a>
+        </div>
+      </div>
+      <div class="header-right">
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a>Portfolio</a>
+            <ul class="dropdown">
+              <li><a href="landscape.html">Landscape</a></li>
+              <li><a href="wildlife.html">Wildlife</a></li>
+              <li><a href="portrait.html">Portrait</a></li>
+            </ul>
+          </li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+<body>
+  <h1>My Photography Map</h1>
+  <div id="map"></div>
+
+  <script>
+    function initMap() {
+      // Create a map centered at a specific location
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 40.7128, lng: -74.0060 }, // Replace with your desired center coordinates
+        zoom: 10 // Adjust the zoom level as per your preference
+      });
+
+      // Define an array of pinpoints with their coordinates and captions
+      var pinpoints = [
+        {
+          position: { lat: 40.7128, lng: -74.0060 },
+          caption: 'New York City, USA',
+          link: 'nyc.html' // Replace with the link to the page with photos taken at this location
+        },
+        {
+          position: { lat: 51.5074, lng: -0.1278 },
+          caption: 'London, UK',
+          link: 'london.html' // Replace with the link to the page with photos taken at this location
+        },
+        // Add more pinpoints as per your requirement
+      ];
+
+      // Iterate through the pinpoints array and add markers to the map
+      for (var i = 0; i < pinpoints.length; i++) {
+        var pinpoint = pinpoints[i];
+
+        // Create a marker with the specified position
+        var marker = new google.maps.Marker({
+          position: pinpoint.position,
+          map: map,
+          title: pinpoint.caption
+        });
+
+        // Add an event listener to redirect to the specified page when the marker is clicked
+        marker.addListener('click', function() {
+          window.location.href = pinpoint.link;
+        });
+      }
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap" async defer></script>
+</body>
+  <footer>
+    <p>© Justin Leahy 2023 | JPL</p>
+  </footer>
+</html>

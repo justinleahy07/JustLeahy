@@ -190,3 +190,10 @@ nav ul ul.dropdown li:hover {
   background-color: #7B9DA7;
 }
 
+
+
+
+#map {
+  width: 100%;
+  height: 400px;
+}

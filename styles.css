@@ -536,3 +536,32 @@ footer p {
     margin-right: 0;
   }
 }
+
+/* Mobile Sidebar Styles */
+.mobile-sidebar {
+  background-color: #83A27F;
+  color: white;
+  padding: 20px;
+  display: none; /* Hide the mobile sidebar by default */
+}
+
+.mobile-sidebar.show {
+  display: block; /* Show the mobile sidebar when toggled */
+}
+
+.mobile-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mobile-sidebar li {
+  margin-bottom: 10px;
+}
+
+.mobile-sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+
+

@@ -127,3 +127,39 @@ const rows = document.querySelectorAll(".row");
 rows.forEach((row) => {
   observer.observe(row);
 });
+
+// Initialize and display the map
+function initMap() {
+  // Coordinates for the center of the map
+  var center = { lat: 40.7128, lng: -74.0060 };
+
+  // Create the map object
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: center,
+    zoom: 8
+  });
+
+  // Array of pinpoints with location and caption
+  var pinpoints = [
+    { lat: 40.7128, lng: -74.0060, caption: 'New York City' },
+    { lat: 34.0522, lng: -118.2437, caption: 'Los Angeles' },
+    // Add more pinpoints as needed
+  ];
+
+  // Create and display the pinpoints on the map
+  pinpoints.forEach(function (pinpoint) {
+    var marker = new google.maps.Marker({
+      position: pinpoint,
+      map: map,
+      title: pinpoint.caption
+    });
+
+    // Redirect to a page with pictures when a pinpoint is clicked
+    marker.addListener('click', function () {
+      // Redirect to the page for the specific location
+      window.location.href = 'location.html?location=' + encodeURIComponent(pinpoint.caption);
+    });
+  });
+}
+
+

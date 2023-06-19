@@ -179,3 +179,9 @@ rows.forEach((row) => {
     // Fit the map to the bounds of all the pinpoints
     map.fitBounds(bounds);
   }
+
+
+// Add an event listener to redirect to the specified page when the marker is clicked
+marker.addListener('click', function() {
+  window.location.href = pinpoint.link;
+});

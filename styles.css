@@ -133,6 +133,7 @@ footer p {
   margin-bottom: 5px;
 }
 
+/* Dropdown Menu */
 .dropdown:hover .dropdown-content {
   display: block;
 }
@@ -141,7 +142,7 @@ footer p {
   background-color: #83A27F;
 }
 
-
+/* Updated Header Styles */
 header {
   background-color: #83A27F;
   color: white;
@@ -189,9 +190,6 @@ nav ul ul.dropdown li a {
 nav ul ul.dropdown li:hover {
   background-color: #7B9DA7;
 }
-
-
-
 
 #map {
   width: 100%;

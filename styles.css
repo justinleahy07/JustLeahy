@@ -203,3 +203,216 @@ nav ul ul.dropdown li:hover {
   font-size: 36px;
   margin-top: 20px; /* Increase the margin-top to create more space */
 }
+
+/* Global Styles */
+body {
+  /* Add a smooth scrolling behavior */
+  scroll-behavior: smooth;
+}
+
+header {
+  /* Add a fixed position for the header */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+nav .logo {
+  /* Add a subtle animation on hover */
+  transition: transform 0.3s ease-in-out;
+}
+
+nav .logo:hover {
+  /* Apply a rotate transformation on hover */
+  transform: rotate(360deg);
+}
+
+nav ul li a {
+  /* Add a smooth transition effect */
+  transition: color 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+  /* Change the color on hover */
+  color: #fff;
+}
+
+/* Home Page */
+#home .hero h1 {
+  /* Add a text shadow for emphasis */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Portfolio Page */
+.photo-grid {
+  /* Add a subtle box shadow for depth */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.photo:hover .overlay {
+  /* Add a transition effect for the overlay opacity */
+  transition: opacity 0.5s ease-in-out;
+}
+
+.photo:hover .caption {
+  /* Change the background color of the caption on hover */
+  background-color: rgba(0, 0, 0, 0.8);
+  /* Add a smooth transition effect */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.caption p {
+  /* Add a bottom margin to the caption paragraphs */
+  margin-bottom: 10px;
+}
+
+/* Map Page */
+#map-page h1 {
+  /* Add a text shadow for emphasis */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#map-page .map-info {
+  /* Add a background color and padding to the map info section */
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+}
+
+#map-page .map-info p {
+  /* Add a bottom margin to the map info paragraphs */
+  margin-bottom: 10px;
+}
+
+/* Footer Styles */
+footer {
+  /* Add a semi-transparent background color */
+  background-color: rgba(131, 162, 127, 0.9);
+  /* Add a box shadow for depth */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+footer p {
+  /* Add a text shadow for emphasis */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  header {
+    /* Reduce the padding on small screens */
+    padding: 10px;
+  }
+
+  nav ul li {
+    /* Display the menu items vertically on small screens */
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  nav ul li:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Global Styles */
+body {
+  /* Add a background image */
+  background-image: url('background.jpg');
+  background-size: cover;
+}
+
+/* Header Styles */
+header {
+  /* Add a semi-transparent background color */
+  background-color: rgba(131, 162, 127, 0.9);
+  /* Add a box shadow for depth */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+nav .logo {
+  /* Add a subtle animation on hover */
+  transition: transform 0.3s ease-in-out;
+}
+
+nav .logo:hover {
+  /* Apply a scale transformation on hover */
+  transform: scale(1.1);
+}
+
+nav ul li a {
+  /* Add a smooth transition effect */
+  transition: color 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+  /* Change the color on hover */
+  color: #fff;
+}
+
+/* Home Page */
+#home .hero h1 {
+  /* Add a text shadow for emphasis */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Portfolio Page */
+.photo-grid {
+  /* Add a subtle box shadow for depth */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.photo:hover .overlay {
+  /* Add a transition effect for the overlay opacity */
+  transition: opacity 0.5s ease-in-out;
+}
+
+.photo:hover .caption {
+  /* Change the background color of the caption on hover */
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.caption p {
+  /* Add a bottom margin to the caption paragraphs */
+  margin-bottom: 10px;
+}
+
+/* Map Page */
+#map-page h1 {
+  /* Add a text shadow for emphasis */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#map-page .map-info {
+  /* Add a background color and padding to the map info section */
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+}
+
+#map-page .map-info p {
+  /* Add a bottom margin to the map info paragraphs */
+  margin-bottom: 10px;
+}
+
+/* Footer Styles */
+footer {
+  /* Add a semi-transparent background color */
+  background-color: rgba(131, 162, 127, 0.9);
+  /* Add a box shadow for depth */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+footer p {
+  /* Add a text shadow for emphasis */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+
+
+
+
+

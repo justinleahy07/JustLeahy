@@ -524,6 +524,77 @@ footer p {
 }
 
 
+/* Mobile Styles */
+@media screen and (max-width: 480px) {
+  /* Adjust the font size for better readability on small screens */
+  body {
+    font-size: 14px;
+  }
+
+  /* Center the logo and menu items vertically on small screens */
+  .header-left, .header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Hide the menu items and display a toggle button for small screens */
+  .header-right {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    color: #83A27F;
+    cursor: pointer;
+    z-index: 9999;
+  }
+
+  /* Display the menu items when the toggle button is clicked */
+  .menu-toggle.active ~ .menu {
+    display: block;
+  }
+
+  /* Adjust the padding and margin of the menu items on small screens */
+  .menu li {
+    margin: 10px 0;
+  }
+
+  /* Add a smooth transition effect for the menu toggle button */
+  .menu-toggle {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+
+  /* Change the background color and color of the menu toggle button on hover */
+  .menu-toggle:hover {
+    background-color: #83A27F;
+    color: #fff;
+  }
+
+  /* Adjust the padding and margin of the portfolio grid on small screens */
+  .photo-grid {
+    margin-bottom: 20px;
+  }
+
+  .photo {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
 
 
 

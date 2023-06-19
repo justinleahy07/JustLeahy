@@ -129,4 +129,8 @@ rows.forEach((row) => {
 });
 
 
+// Toggle Mobile Sidebar
+document.querySelector('.menu-icon').addEventListener('click', function() {
+  document.querySelector('.menu').classList.toggle('show');
+});
 

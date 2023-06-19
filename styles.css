@@ -75,6 +75,8 @@ footer p {
   margin-top: 20px;
 }
 
+
+
 /* Portfolio Page */
 #portfolio h1 {
   font-size: 36px;
@@ -194,9 +196,10 @@ nav ul ul.dropdown li:hover {
 #map {
   width: 100%;
   height: 400px;
+  margin-top: 20px; /* Add margin-top to create space */
 }
 
 #map-page h1 {
   font-size: 36px;
-  margin-top: 20px;
+  margin-top: 20px; /* Increase the margin-top to create more space */
 }

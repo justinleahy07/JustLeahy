@@ -203,3 +203,38 @@ nav ul ul.dropdown li:hover {
   font-size: 36px;
   margin-top: 20px; /* Increase the margin-top to create more space */
 }
+
+
+/* Add this to your existing styles.css file */
+
+/* Home Page */
+#home .welcome-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#home .welcome-content {
+  flex: 0 0 50%;
+  padding-right: 20px;
+}
+
+#home .welcome-content h1 {
+  font-size: 36px;
+  margin-top: 20px;
+}
+
+#home .welcome-content h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#home .photo-container {
+  flex: 0 0 50%;
+}
+
+#home .photo-container img {
+  max-width: 100%;
+  height: auto;
+}

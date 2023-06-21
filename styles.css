@@ -238,3 +238,52 @@ nav ul ul.dropdown li:hover {
   max-width: 100%;
   height: auto;
 }
+
+
+.slideshow {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+}
+
+.caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px;
+}
+
+.caption h2, .caption p {
+  margin: 0;
+}
+
+/* Optional styles for navigation arrows */
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}

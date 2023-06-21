@@ -128,8 +128,3 @@ rows.forEach((row) => {
   observer.observe(row);
 });
 
-// Toggle Mobile Sidebar
-document.querySelector('.menu-icon').addEventListener('click', function() {
-  document.querySelector('.header-right .menu').classList.toggle('show');
-});
-

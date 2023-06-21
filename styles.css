@@ -240,14 +240,20 @@ nav ul ul.dropdown li:hover {
 }
 
 
+/* Slideshow Gallery */
 .slideshow {
   position: relative;
-  max-width: 100%;
+}
+
+.slideshow-container {
+  display: flex;
   overflow: hidden;
 }
 
 .slide {
-  display: none;
+  position: relative;
+  flex: 0 0 100%;
+  transition: transform 0.3s ease-in-out;
 }
 
 .slide img {
@@ -261,23 +267,32 @@ nav ul ul.dropdown li:hover {
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
-  color: white;
+  color: #fff;
   padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
-.caption h2, .caption p {
-  margin: 0;
+.slide:hover .caption {
+  opacity: 1;
 }
 
-/* Optional styles for navigation arrows */
-
-.prev, .next {
+.prev,
+.next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   font-size: 24px;
-  color: white;
+  color: #fff;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .prev {

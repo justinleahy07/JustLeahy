@@ -128,3 +128,49 @@ rows.forEach((row) => {
   observer.observe(row);
 });
 
+
+
+// JavaScript for slideshow functionality
+
+// Get all slide elements
+const slides = document.querySelectorAll('.slide');
+// Set initial slide index
+let currentSlide = 0;
+
+// Show the current slide
+function showSlide() {
+  // Hide all slides
+  slides.forEach(slide => {
+    slide.style.display = 'none';
+  });
+  // Show the current slide
+  slides[currentSlide].style.display = 'block';
+}
+
+// Function to go to the previous slide
+function goToPrevSlide() {
+  currentSlide--;
+  if (currentSlide < 0) {
+    currentSlide = slides.length - 1;
+  }
+  showSlide();
+}
+
+// Function to go to the next slide
+function goToNextSlide() {
+  currentSlide++;
+  if (currentSlide >= slides.length) {
+    currentSlide = 0;
+  }
+  showSlide();
+}
+
+// Show the initial slide
+showSlide();
+
+// Optional: Add event listeners for navigation arrows
+const prevArrow = document.querySelector('.prev');
+const nextArrow = document.querySelector('.next');
+
+prevArrow.addEventListener('click', goToPrevSlide);
+nextArrow.addEventListener('click', goToNextSlide);

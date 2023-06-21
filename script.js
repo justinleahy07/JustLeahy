@@ -123,29 +123,34 @@ const observer = new IntersectionObserver(
   { threshold: 0.5 }
 );
 
-const rows = document.querySelectorAll(".row");
-rows.forEach((row) => {
-  observer.observe(row);
-});
 
-var slides = document.getElementsByClassName('slide');
-var currentIndex = 0;
 
-function showSlide(index) {
-  // Hide all slides
-  for (var i = 0; i < slides.length; i++) {
-    slides[i].classList.remove('active');
-  }
+var slideIndex = 0;
+showSlides(slideIndex);
 
-  // Show the selected slide
-  slides[index].classList.add('active');
+function plusSlides(n) {
+  showSlides(slideIndex += n);
 }
 
-// Start the slideshow
-showSlide(currentIndex);
+function showSlides(n) {
+  var slides = document.getElementsByClassName("slide");
+  if (n >= slides.length) {
+    slideIndex = 0;
+  } else if (n < 0) {
+    slideIndex = slides.length - 1;
+  }
+  for (var i = 0; i < slides.length; i++) {
+    slides[i].style.transform = "translateX(" + (-slideIndex * 100) + "%)";
+  }
+}
 
-// Automatically advance to the next slide every 3 seconds (adjust the duration as needed)
-setInterval(function() {
-  currentIndex = (currentIndex + 1) % slides.length;
-  showSlide(currentIndex);
-}, 3000);
+var prevBtn = document.querySelector(".prev");
+var nextBtn = document.querySelector(".next");
+
+prevBtn.addEventListener("click", function() {
+  plusSlides(-1);
+});
+
+nextBtn.addEventListener("click", function() {
+  plusSlides(1);
+});

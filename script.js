@@ -123,39 +123,7 @@ const observer = new IntersectionObserver(
   { threshold: 0.5 }
 );
 
-var slideIndex = 0;
-showSlides();
-
-function showSlides() {
-  var slides = document.getElementsByClassName("slide");
-  var captions = document.getElementsByClassName("caption");
-  
-  for (var i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-    captions[i].style.opacity = 0;
-  }
-  
-  slideIndex++;
-  
-  if (slideIndex > slides.length) {
-    slideIndex = 1;
-  }
-  
-  slides[slideIndex - 1].style.display = "block";
-  captions[slideIndex - 1].style.opacity = 1;
-  
-  setTimeout(showSlides, 3000); // Change slide every 3 seconds
-}
-
-var prevBtn = document.querySelector(".prev");
-var nextBtn = document.querySelector(".next");
-
-prevBtn.addEventListener("click", function() {
-  slideIndex--;
-  showSlides();
-});
-
-nextBtn.addEventListener("click", function() {
-  slideIndex++;
-  showSlides();
+const rows = document.querySelectorAll(".row");
+rows.forEach((row) => {
+  observer.observe(row);
 });

@@ -302,3 +302,46 @@ nav ul ul.dropdown li:hover {
   right: 10px;
 }
 
+.photo-grid {
+  margin-bottom: 40px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.photo {
+  position: relative;
+  width: calc(33.33% - 10px);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.photo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.photo:hover .caption {
+  opacity: 1;
+}
+
+.caption p {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+

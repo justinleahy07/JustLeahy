@@ -123,34 +123,39 @@ const observer = new IntersectionObserver(
   { threshold: 0.5 }
 );
 
-
-
 var slideIndex = 0;
-showSlides(slideIndex);
+showSlides();
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-function showSlides(n) {
+function showSlides() {
   var slides = document.getElementsByClassName("slide");
-  if (n >= slides.length) {
-    slideIndex = 0;
-  } else if (n < 0) {
-    slideIndex = slides.length - 1;
-  }
+  var captions = document.getElementsByClassName("caption");
+  
   for (var i = 0; i < slides.length; i++) {
-    slides[i].style.transform = "translateX(" + (-slideIndex * 100) + "%)";
+    slides[i].style.display = "none";
+    captions[i].style.opacity = 0;
   }
+  
+  slideIndex++;
+  
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+  
+  slides[slideIndex - 1].style.display = "block";
+  captions[slideIndex - 1].style.opacity = 1;
+  
+  setTimeout(showSlides, 3000); // Change slide every 3 seconds
 }
 
 var prevBtn = document.querySelector(".prev");
 var nextBtn = document.querySelector(".next");
 
 prevBtn.addEventListener("click", function() {
-  plusSlides(-1);
+  slideIndex--;
+  showSlides();
 });
 
 nextBtn.addEventListener("click", function() {
-  plusSlides(1);
+  slideIndex++;
+  showSlides();
 });

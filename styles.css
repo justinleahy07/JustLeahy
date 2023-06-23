@@ -75,8 +75,6 @@ footer p {
   margin-top: 20px;
 }
 
-
-
 /* Portfolio Page */
 #portfolio h1 {
   font-size: 36px;
@@ -262,6 +260,10 @@ nav ul ul.dropdown li:hover {
   height: auto;
 }
 
+.slide:hover .caption {
+  opacity: 1;
+}
+
 .caption {
   position: absolute;
   bottom: 0;
@@ -272,10 +274,6 @@ nav ul ul.dropdown li:hover {
   padding: 10px;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
-}
-
-.slide:hover .caption {
-  opacity: 1;
 }
 
 .prev,
@@ -303,3 +301,4 @@ nav ul ul.dropdown li:hover {
 .next {
   right: 10px;
 }
+

@@ -78,22 +78,27 @@ footer p {
 /* Portfolio Page */
 #portfolio h1 {
   font-size: 36px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
-
 .photo-grid {
-  margin-bottom: 40px;
+  margin-bottom: 0px;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
+  margin: 0;
 }
 
 .photo {
-  flex: 1 0 calc(33.33% - 10px); /* Adjust the width calculation as needed */
-  margin-bottom: 0; /* Remove the margin-bottom to eliminate spacing */
+  flex: 0 0 calc(33.33% - 10px); /* Adjust the width calculation as needed */
+  margin-right: 0px; /* Add margin-right for spacing between photos */
+  margin-bottom: 0px; /* Add margin-bottom for spacing between rows */
   overflow: hidden;
+}
+
+.photo:last-child {
+  margin-right: 0; /* Remove margin-right for the last photo in each row */
 }
 
 .photo img {

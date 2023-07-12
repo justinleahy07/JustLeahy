@@ -12,6 +12,89 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+   <style>
+    /* Reset CSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Global Styles */
+    body {
+      background-color: #7B9DA7;
+      color: white;
+      font-family: "Raleway", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    header {
+      background-color: #83A27F;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    nav ul li:last-child {
+      margin-right: 0;
+    }
+
+    nav .logo {
+      color: white;
+      font-size: 20px;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    footer {
+      background-color: #83A27F;
+      padding: 20px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .photo {
+      position: relative;
+      flex: 0 0 calc(33.33% - 10px);
+      margin: 10px;
+      overflow: hidden;
+      border: none;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -10px;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
   <title>Justin Leahy - Joshua Tree Photos</title>
 </head>
 <body>

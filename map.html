@@ -53,23 +53,24 @@
       function initMap() {
   // Define an array of pinpoints with their coordinates and captions
   var pinpoints = [
-    {
-      position: { lat: 33.8734, lng: -115.9010 },
-      caption: 'Joshua Tree National Park',
-      link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
-    },
-    {
-      position: { lat: 51.1784, lng: -115.5708 },
-      caption: 'Banff National Park',
-      link: 'banff.html' // Replace with the link to the page with photos taken at this location
-    },
-    
-     position: { lat: 35.35486, lng: -82.990414},
-      caption: 'Blue Ridge Parkway',
-      link: 'blueridgeparkway.html'  
-      
-    // Add more pinpoints as per your requirement
-  ];
+  {
+    position: { lat: 33.8734, lng: -115.9010 },
+    caption: 'Joshua Tree National Park',
+    link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
+  },
+  {
+    position: { lat: 51.1784, lng: -115.5708 },
+    caption: 'Banff National Park',
+    link: 'banff.html' // Replace with the link to the page with photos taken at this location
+  },
+  {
+    position: { lat: 35.35486, lng: -82.990414 },
+    caption: 'Blue Ridge Parkway',
+    link: 'blueridgeparkway.html' // Replace with the link to the page with photos taken at this location
+  },
+  // Add more pinpoints as per your requirement
+];
+
 
   // Calculate the geographical center of the pinpoints
   var bounds = new google.maps.LatLngBounds();

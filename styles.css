@@ -318,6 +318,7 @@ nav ul ul.dropdown li:hover {
 
 #home .photo-container .overlay,
 #about .photo-container .overlay {
+.overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -330,7 +331,15 @@ nav ul ul.dropdown li:hover {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  pointer-events: none; /* Add this line */
 }
+
+.photo:hover .overlay {
+  opacity: 1;
+  pointer-events: auto; /* Add this line */
+}
+
+
 
 #home .photo-container:hover .overlay,
 #about .photo-container:hover .overlay {

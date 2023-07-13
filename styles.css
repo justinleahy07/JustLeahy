@@ -278,20 +278,46 @@ nav ul ul.dropdown li:hover {
   margin-top: 20px;
 }
 /* Home Page and About Page */
-#home .hero,
-#about .hero {
-  text-align: center;
+#home .welcome-section,
+#about .welcome-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#home .welcome-content,
+#about .welcome-content {
+  flex: 0 0 50%;
+  padding-right: 20px;
+}
+
+#home .welcome-content h1,
+#about .welcome-content h1 {
+  font-size: 36px;
+  margin-top: 20px;
+}
+
+#home .welcome-content h4,
+#about .welcome-content h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#home .photo-container,
+#about .photo-container {
+  flex: 0 0 50%;
   position: relative; /* Add position relative to create a stacking context */
 }
 
-#home .hero img,
-#about .hero img {
+#home .photo-container img,
+#about .photo-container img {
   max-width: 100%;
   height: auto;
 }
 
-#home .hero .overlay,
-#about .hero .overlay {
+#home .photo-container .overlay,
+#about .photo-container .overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -306,20 +332,20 @@ nav ul ul.dropdown li:hover {
   flex-direction: column;
 }
 
-#home .hero:hover .overlay,
-#about .hero:hover .overlay {
+#home .photo-container:hover .overlay,
+#about .photo-container:hover .overlay {
   opacity: 1;
 }
 
-#home .hero .caption,
-#about .hero .caption {
+#home .photo-container .caption,
+#about .photo-container .caption {
   text-align: center;
   color: white;
   padding: 10px;
 }
 
-#home .hero p,
-#about .hero p {
+#home .photo-container p,
+#about .photo-container p {
   font-size: 14px;
   margin-bottom: 5px;
 }

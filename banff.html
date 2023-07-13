@@ -1,37 +1,20 @@
 <!DOCTYPE html> 
 <html lang="en">
-<head><!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SFH8SW31QP');
+  </script>
 
-  gtag('config', 'G-SFH8SW31QP');
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-   <style>
 
-    /* Add styles to make the header sticky */
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    .header {
-      position: sticky;
-      top: 0;
-      background-color: #f1f1f1;
-      padding: 10px;
-      text-align: center;
-    }
-
-    .content {
-      padding: 16px;
-    }
-
+  <style>
     /* Reset CSS */
     * {
       margin: 0;
@@ -53,7 +36,10 @@
       text-decoration: none;
     }
 
-    header {
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
       background-color: #83A27F;
       padding: 20px;
       display: flex;
@@ -61,42 +47,15 @@
       align-items: center;
     }
 
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    nav ul li {
-      display: inline-block;
-      margin-right: 20px;
-    }
-
-    nav ul li:last-child {
-      margin-right: 0;
-    }
-
-    nav .logo {
+    .header .logo {
       color: white;
       font-size: 20px;
     }
 
-    main {
+    .content {
       padding: 20px;
+      margin-top: 80px; /* Add margin to content to prevent it from overlapping with the fixed header */
     }
-
-    footer {
-      background-color: #83A27F;
-      padding: 20px;
-      text-align: center;
-    }
-
-    footer p {
-      font-size: 14px;
-      margin: 0;
-    }
-
-    
 
     .row {
       display: flex;
@@ -104,28 +63,27 @@
       margin: 0 -20px;
     }
 
-   .photo {
-  position: relative;
-  flex: 0 0 calc(33.33% - 40px);
-  margin: 20px;
-  overflow: hidden;
-  border: none;
-  height: 300px;
-  width: 450px;
-}
+    .photo {
+      position: relative;
+      flex: 0 0 calc(33.33% - 40px);
+      margin: 20px;
+      overflow: hidden;
+      border: none;
+      height: 300px;
+      width: 450px;
+    }
 
-.photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
-
 
   <title>Justin Leahy - Portfolio</title>
 </head>
 <body>
-<div class="header">  <nav>
+  <div class="header">
     <div class="header-left">
       <div class="logo">
         <a href="index.html">Justin Leahy</a>
@@ -134,97 +92,96 @@
     <div class="header-right">
       <ul class="menu">
         <li><a href="index.html">Home</a></li>
-        <li><a>Portfolio</a>
+        <li>
+          <a>Portfolio</a>
           <ul class="dropdown">
             <li><a href="landscape.html">Landscape</a></li>
             <li><a href="portrait.html">Portrait</a></li>
-                        <li><a href="wildlife.html">Wildlife</a></li>
-
+            <li><a href="wildlife.html">Wildlife</a></li>
           </ul>
         </li>
         <li><a href="about.html">About</a></li>
-                            <li><a href="map.html">Map</a></li>
-
+        <li><a href="map.html">Map</a></li>
       </ul>
     </div>
-  </nav>
-</div>
+  </div>
+
   <div class="content">
-  <main id="portfolio">
-    <h1>Banff Portfolio</h1>
-    <section class="photo-grid">
-      <div class="row">
-        <div class="photo"> 
-          <img src="bow.jpg" alt="Photo 1" height="300" width="450">
-          <div class="overlay">
-            <div class="caption">
-              <p>Bow River Overlook, Hoodoos Trail</p>
-              <p>Taken: June, 2022</p>
-              <p>Location: Banff National Park, Alberta</p>
+    <main id="portfolio">
+      <h1>Banff Portfolio</h1>
+      <section class="photo-grid">
+        <div class="row">
+          <div class="photo"> 
+            <img src="bow.jpg" alt="Photo 1" height="300" width="450">
+            <div class="overlay">
+              <div class="caption">
+                <p>Bow River Overlook, Hoodoos Trail</p>
+                <p>Taken: June, 2022</p>
+                <p>Location: Banff National Park, Alberta</p>
+              </div>
+            </div>
+          </div>
+          <div class="photo">
+            <img src="jack.jpg" alt="Photo 2" height="300" width="450">
+            <div class="overlay">
+              <div class="caption">
+                <p>Two Jack Lake</p>
+                <p>Taken: June, 2022</p>
+                <p>Location: Banff National Park, Alberta</p>
+              </div>
+            </div>
+          </div>
+          <div class="photo">
+            <img src="water.jpg" alt="Photo 3" height="300" width="450">
+            <div class="overlay">
+              <div class="caption">
+                <p>Bow River Trail</p>
+                <p>Taken: June, 2022</p>
+                <p>Location: Banff National Park, Alberta</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="photo">
-          <img src="jack.jpg" alt="Photo 2" height="300" width="450">
-          <div class="overlay">
-            <div class="caption">
-              <p>Two Jack Lake</p>
-              <p>Taken: June, 2022</p>
-              <p>Location: Banff National Park, Alberta</p>
+        <br>
+        <div class="row">
+          <div class="photo"> 
+            <img src="road.jpg" alt="Photo 4" height="300" width="450">
+            <div class="overlay">
+              <div class="caption">
+                <p>Icefields Parkway Vista</p> 
+                <p>Taken: June, 2022</p>
+                <p>Location: Banff National Park, Alberta</p>
+              </div>
+            </div>
+          </div>
+          <div class="photo">
+            <img src="lakebow.jpg" alt="Photo 5" height="300" width="450">
+            <div class="overlay">
+              <div class="caption">
+                <p>Bow Lake Trail</p>
+                <p>Taken: June, 2022</p>
+                <p>Location: Banff National Park, Alberta</p>
+              </div>
+            </div>
+          </div>
+          <div class="photo">
+            <img src="lake.jpg" alt="Photo 6" height="300" width="450">
+            <div class="overlay">
+              <div class="caption">
+                <p>Moraine Lake</p>
+                <p>Taken: June, 2022</p>
+                <p>Location: Banff National Park, Alberta</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="photo">
-          <img src="water.jpg" alt="Photo 3" height="300" width="450">
-          <div class="overlay">
-            <div class="caption">
-                            <p>Bow River Trail</p>
-
-              <p>Taken: June, 2022</p>
-              <p>Location: Banff National Park, Alberta</p>
-            </div>
-          </div>
-        </div>
-      </div><br><div class="row">
-        <div class="photo"> 
-          <img src="road.jpg" alt="Photo 1" height="300" width="450">
-          <div class="overlay">
-            <div class="caption">
-              <p>Icefields Parkway Vista</p> 
-              <p>Taken: June, 2022</p>
-              <p>Location: Banff National Park, Alberta</p>
-            </div>
-          </div>
-        </div>
-        <div class="photo">
-          <img src="lakebow.jpg" alt="Photo 2" height="300" width="450">
-          <div class="overlay">
-            <div class="caption">
-              <p>Bow Lake Trail</p>
-              <p>Taken: June, 2022</p>
-              <p>Location: Banff National Park, Alberta</p>
-            </div>
-          </div>
-        </div>
-        <div class="photo">
-          <img src="lake.jpg" alt="Photo 3" height="300" width="450">
-          <div class="overlay">
-            <div class="caption">
-                            <p>Moraine Lake</p>
-
-              <p>Taken: June, 2022</p>
-              <p>Location: Banff National Park, Alberta</p>
-            </div>
-          </div>
-        </div>
-      </div><br> <h2> <em> Future Visit Required </em> </h2> </div>
-
-      
-    </section>
-  </main>
-  <footer>
-    <p>© Justin Leahy 2023 | JPL</p>
-  </footer>
-
+        <br>
+        <h2><em>Future Visit Required</em></h2>
+      </section>
+    </main>
+    <footer>
+      <p>© Justin Leahy 2023 | JPL</p>
+    </footer>
+  </div>
 </body>
 </html>

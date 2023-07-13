@@ -107,6 +107,7 @@ footer p {
   object-fit: cover;
 }
 
+
 .overlay {
   position: absolute;
   top: 0;
@@ -144,6 +145,7 @@ footer p {
 .dropdown-content a:hover {
   background-color: #83A27F;
 }
+
 
 header {
   background-color: #83A27F;
@@ -193,6 +195,88 @@ nav ul ul.dropdown li:hover {
   background-color: #7B9DA7;
 }
 
+
+/* Home Page */
+#home .welcome-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#home .welcome-content {
+  flex: 0 0 50%;
+  padding-right: 20px;
+}
+
+#home .welcome-content h1 {
+  font-size: 36px;
+  margin-top: 20px;
+}
+
+#home .welcome-content h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#home .photo-container {
+  flex: 0 0 50%;
+}
+
+#home .photo-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Home Page */
+#about .welcome-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#about .welcome-content {
+  flex: 0 0 50%;
+  padding-left: 20px;
+}
+
+#about .welcome-content h1 {
+  font-size: 36px;
+  margin-top: 20px;
+}
+
+#about .welcome-content h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#about .photo-container {
+  flex: 0 0 50%;
+}
+
+#about .photo-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+#map-page {
+  text-align: center;
+}
+
+#map {
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+}
+
+#map h1 {
+  font-size: 36px;
+  margin-top: 20px;
+}
 /* Home Page and About Page */
 #home .welcome-section,
 #about .welcome-section {
@@ -223,7 +307,7 @@ nav ul ul.dropdown li:hover {
 #home .photo-container,
 #about .photo-container {
   flex: 0 0 50%;
-  position: relative;
+  position: relative; /* Add position relative to create a stacking context */
 }
 
 #home .photo-container img,
@@ -234,6 +318,7 @@ nav ul ul.dropdown li:hover {
 
 #home .photo-container .overlay,
 #about .photo-container .overlay {
+.overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -246,11 +331,15 @@ nav ul ul.dropdown li:hover {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  pointer-events: none; /* Add this line */
 }
 
 .photo:hover .overlay {
   opacity: 1;
+  pointer-events: auto; /* Add this line */
 }
+
+
 
 #home .photo-container:hover .overlay,
 #about .photo-container:hover .overlay {
@@ -269,4 +358,3 @@ nav ul ul.dropdown li:hover {
   font-size: 14px;
   margin-bottom: 5px;
 }
-

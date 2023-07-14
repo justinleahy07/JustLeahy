@@ -401,49 +401,49 @@
       
 ];
 var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-71.116253, 42.374595], // Adjust the center coordinates as per your preference
-        zoom: 10 // Adjust the zoom level as per your preference
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [-71.116253, 42.374595], // Adjust the center coordinates as per your preference
+    zoom: 10 // Adjust the zoom level as per your preference
+  });
+
+  var popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+  });
+
+  map.on('load', function() {
+    var bounds = new mapboxgl.LngLatBounds();
+
+    for (var i = 0; i < pinpoints.length; i++) {
+      var pinpoint = pinpoints[i];
+
+      var marker = new mapboxgl.Marker()
+        .setLngLat(pinpoint.position)
+        .addTo(map);
+
+      bounds.extend(marker.getLngLat());
+
+      marker.getElement().addEventListener('mouseenter', function() {
+        var caption = this.getAttribute('data-caption');
+        var coordinates = this.getAttribute('data-coordinates').split(',');
+
+        popup.setLngLat(coordinates)
+          .setHTML('<h3>' + caption + '</h3><p>Description here</p>')
+          .addTo(map);
       });
 
-      var popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false
+      marker.getElement().addEventListener('mouseleave', function() {
+        popup.remove();
       });
 
-      map.on('load', function() {
-        var bounds = new mapboxgl.LngLatBounds();
+      marker.getElement().setAttribute('data-caption', pinpoint.caption);
+      marker.getElement().setAttribute('data-coordinates', pinpoint.position.lng + ',' + pinpoint.position.lat);
+    }
 
-        for (var i = 0; i < pinpoints.length; i++) {
-          var pinpoint = pinpoints[i];
-
-          var marker = new mapboxgl.Marker()
-            .setLngLat(pinpoint.position)
-            .addTo(map);
-
-          bounds.extend(marker.getLngLat());
-
-          marker.getElement().addEventListener('mouseenter', function() {
-            var caption = this.getAttribute('data-caption');
-            var coordinates = this.getAttribute('data-coordinates').split(',');
-
-            popup.setLngLat(coordinates)
-              .setHTML('<h3>' + caption + '</h3><p>Description here</p>')
-              .addTo(map);
-          });
-
-          marker.getElement().addEventListener('mouseleave', function() {
-            popup.remove();
-          });
-
-          marker.getElement().setAttribute('data-caption', pinpoint.caption);
-          marker.getElement().setAttribute('data-coordinates', pinpoint.position.lng + ',' + pinpoint.position.lat);
-        }
-
-        map.fitBounds(bounds, {
-          padding: 50
-        });
+    map.fitBounds(bounds, {
+      padding: 50
+    });
       });
     </script>
   </main>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-SFH8SW31QP');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Justin Leahy - Map</title>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="header-left">
+        <div class="logo">
+          <a href="index.html">Justin Leahy</a>
+        </div>
+      </div>
+      <div class="header-right">
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a>Portfolio</a>
+            <ul class="dropdown">
+              <li><a href="landscape.html">Landscape</a></li>
+              <li><a href="portrait.html">Portrait</a></li>
+                            <li><a href="wildlife.html">Wildlife</a></li>
+
+            </ul>
+          </li>
+          <li><a href="about.html">About</a></li>
+                    <li><a href="map.html">Map</a></li>
+
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="map-page">
+    <!-- Map page content -->
+    <h1>Favorite Travels</h1>
+    <!-- Rest of the map page content -->
+    <div id="map"></div>
+
+    <script>
+      function initMap() {
+  // Define an array of pinpoints with their coordinates and captions
+  var pinpoints = [
+  {
+    position: { lat: 42.374595, lng:-71.116253 },
+    caption: '(Harvard University) Jahrel Noble, Diane Sun',
+    link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
+  },
+  {
+    position: { lat: 29.461279, lng: -98.483842 },
+    caption: '(Trinity University) Aidan Walker, Natalie Saldana',
+    link: 'canadianrockies.html' // Replace with the link to the page with photos taken at this location
+  },{
+    position: { lat: 42.454360, lng: -76.475026 },
+    caption: '(Cornell University) Levi Chen',
+    link: 'blueridge.html' // Replace with the link to the page with photos taken at this location
+  },{
+    position: { lat: 40.424939, lng: -105.756965 },
+    caption: 'Rocky Mountain National Park',
+    link: 'rockymountain.html' // Replace with the link to the page with photos taken at this location
+  },{
+    position: { lat: 38.189466, lng: -109.887094 },
+    caption: 'Canyonlands National Park',
+    link: 'canyonlands.html' // Replace with the link to the page with photos taken at this location
+  },{
+    position: { lat: 19.294957, lng: -155.098257 },
+    caption: 'Hawaii Volcanoes National Park',
+    link: 'hawaiivolcanoes.html' // Replace with the link to the page with photos taken at this location
+  },
+      
+];
+
+
+  // Calculate the geographical center of the pinpoints
+  var bounds = new google.maps.LatLngBounds();
+  for (var i = 0; i < pinpoints.length; i++) {
+    bounds.extend(pinpoints[i].position);
+  }
+  var center = bounds.getCenter();
+
+  // Create a map centered at the geographical center of the pinpoints
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: center,
+    zoom: 10, // Adjust the zoom level as per your preference
+    zoomControl: true, // Enable zoom controls
+    mapTypeControl: true, // Enable map type controls
+    fullscreenControl: true // Enable fullscreen control
+  });
+
+  // Apply custom styles to the map
+  map.setOptions({
+    styles: [
+      {
+        featureType: 'water',
+        elementType: 'geometry',
+        stylers: [{ color: '#c9c9c9' }]
+      },
+      {
+        featureType: 'landscape',
+        elementType: 'geometry',
+        stylers: [{ color: '#f2f2f2' }]
+      },
+      // Add more custom styles as per your preference
+    ]
+  });
+
+  // Iterate through the pinpoints array and add markers to the map
+  for (var i = 0; i < pinpoints.length; i++) {
+    var pinpoint = pinpoints[i];
+
+    // Create a marker with the specified position
+    var marker = new google.maps.Marker({
+      position: pinpoint.position,
+      map: map,
+      title: pinpoint.caption
+    });
+
+
+
+    // Add an info window to display the caption when the marker is clicked
+    marker.addListener('click', function(pinpoint) {
+      return function() {
+        var infowindow = new google.maps.InfoWindow({
+          content: '<div><h3>' + pinpoint.caption + '</h3><p>Description here</p></div>'
+        });
+        infowindow.open(map, marker);
+      };
+    }(pinpoint));
+  }
+
+  // Fit the map to the bounds of all the pinpoints
+  map.fitBounds(bounds);
+}
+
+      
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap" async defer></script>
+  </main>
+
+  <footer>
+    <p>© Justin Leahy 2023 | JPL</p>
+  </footer>
+
+</body>
+</html>

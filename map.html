@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-SFH8SW31QP');
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
@@ -31,13 +22,11 @@
             <ul class="dropdown">
               <li><a href="landscape.html">Landscape</a></li>
               <li><a href="portrait.html">Portrait</a></li>
-                            <li><a href="wildlife.html">Wildlife</a></li>
-
+              <li><a href="wildlife.html">Wildlife</a></li>
             </ul>
           </li>
           <li><a href="about.html">About</a></li>
-                    <li><a href="map.html">Map</a></li>
-
+          <li><a href="map.html">Map</a></li>
         </ul>
       </div>
     </nav>
@@ -50,108 +39,93 @@
     <div id="map"></div>
 
     <script>
+      mapboxgl.accessToken = 'pk.eyJ1IjoianVzdGxlYWh5IiwiYSI6ImNsazJ2ZzFncTBqZmEzZ21zeWxiMjkwZDkifQ.g0O07Y_2aTIewM4s9k0CRQ';
+
       function initMap() {
-  // Define an array of pinpoints with their coordinates and captions
-  var pinpoints = [
-  {
-    position: { lat: 33.8734, lng: -115.9010 },
-    caption: 'Joshua Tree National Park',
-    link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
-  },
-  {
-    position: { lat: 51.1784, lng: -115.5708 },
-    caption: 'Canadian Rockies',
-    link: 'canadianrockies.html' // Replace with the link to the page with photos taken at this location
-  },{
-    position: { lat: 35.35486, lng: -82.990414 },
-    caption: 'Blue Ridge Mountains',
-    link: 'blueridge.html' // Replace with the link to the page with photos taken at this location
-  },{
-    position: { lat: 40.424939, lng: -105.756965 },
-    caption: 'Rocky Mountain National Park',
-    link: 'rockymountain.html' // Replace with the link to the page with photos taken at this location
-  },{
-    position: { lat: 38.189466, lng: -109.887094 },
-    caption: 'Canyonlands National Park',
-    link: 'canyonlands.html' // Replace with the link to the page with photos taken at this location
-  },{
-    position: { lat: 19.294957, lng: -155.098257 },
-    caption: 'Hawaii Volcanoes National Park',
-    link: 'hawaiivolcanoes.html' // Replace with the link to the page with photos taken at this location
-  },
-      
-];
+        // Define an array of pinpoints with their coordinates and captions
+        var pinpoints = [
+          {
+            position: { lat: 33.8734, lng: -115.9010 },
+            caption: 'Joshua Tree National Park',
+            link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 51.1784, lng: -115.5708 },
+            caption: 'Canadian Rockies',
+            link: 'canadianrockies.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 35.35486, lng: -82.990414 },
+            caption: 'Blue Ridge Mountains',
+            link: 'blueridge.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 40.424939, lng: -105.756965 },
+            caption: 'Rocky Mountain National Park',
+            link: 'rockymountain.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 38.189466, lng: -109.887094 },
+            caption: 'Canyonlands National Park',
+            link: 'canyonlands.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 19.294957, lng: -155.098257 },
+            caption: 'Hawaii Volcanoes National Park',
+            link: 'hawaiivolcanoes.html' // Replace with the link to the page with photos taken at this location
+          }
+        ];
 
+        // Calculate the geographical center of the pinpoints
+        var bounds = new mapboxgl.LngLatBounds();
+        for (var i = 0; i < pinpoints.length; i++) {
+          bounds.extend([pinpoints[i].position.lng, pinpoints[i].position.lat]);
+        }
+        var center = bounds.getCenter();
 
-  // Calculate the geographical center of the pinpoints
-  var bounds = new google.maps.LatLngBounds();
-  for (var i = 0; i < pinpoints.length; i++) {
-    bounds.extend(pinpoints[i].position);
-  }
-  var center = bounds.getCenter();
-
-  // Create a map centered at the geographical center of the pinpoints
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: center,
-    zoom: 10, // Adjust the zoom level as per your preference
-    zoomControl: true, // Enable zoom controls
-    mapTypeControl: true, // Enable map type controls
-    fullscreenControl: true // Enable fullscreen control
-  });
-
-  // Apply custom styles to the map
-  map.setOptions({
-    styles: [
-      {
-        featureType: 'water',
-        elementType: 'geometry',
-        stylers: [{ color: '#c9c9c9' }]
-      },
-      {
-        featureType: 'landscape',
-        elementType: 'geometry',
-        stylers: [{ color: '#f2f2f2' }]
-      },
-      // Add more custom styles as per your preference
-    ]
-  });
-
-  // Iterate through the pinpoints array and add markers to the map
-  for (var i = 0; i < pinpoints.length; i++) {
-    var pinpoint = pinpoints[i];
-
-    // Create a marker with the specified position
-    var marker = new google.maps.Marker({
-      position: pinpoint.position,
-      map: map,
-      title: pinpoint.caption
-    });
-
-    // Add an event listener to redirect to the specified page when the marker is clicked
-    marker.addListener('click', function(pinpoint) {
-      return function() {
-        window.location.href = pinpoint.link;
-      };
-    }(pinpoint));
-
-    // Add an info window to display the caption when the marker is clicked
-    marker.addListener('click', function(pinpoint) {
-      return function() {
-        var infowindow = new google.maps.InfoWindow({
-          content: '<div><h3>' + pinpoint.caption + '</h3><p>Description here</p></div>'
+        // Create a map centered at the geographical center of the pinpoints
+        var map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: center,
+          zoom: 10 // Adjust the zoom level as per your preference
         });
-        infowindow.open(map, marker);
-      };
-    }(pinpoint));
-  }
 
-  // Fit the map to the bounds of all the pinpoints
-  map.fitBounds(bounds);
-}
+        // Add navigation controls to the map
+        map.addControl(new mapboxgl.NavigationControl());
 
-      
+        // Iterate through the pinpoints array and add markers to the map
+        for (var i = 0; i < pinpoints.length; i++) {
+          var pinpoint = pinpoints[i];
+
+          // Create a marker with the specified position
+          var marker = new mapboxgl.Marker()
+            .setLngLat([pinpoint.position.lng, pinpoint.position.lat])
+            .setPopup(new mapboxgl.Popup().setHTML('<div><h3>' + pinpoint.caption + '</h3><p>Description here</p></div>'))
+            .addTo(map);
+
+          // Add an event listener to redirect to the specified page when the marker is clicked
+          marker.getElement().addEventListener('click', function (e) {
+            window.location.href = pinpoint.link;
+          });
+
+          // Add an event listener to show the caption when hovering over the marker
+          marker.getElement().addEventListener('mouseenter', function (e) {
+            marker.togglePopup();
+          });
+          marker.getElement().addEventListener('mouseleave', function (e) {
+            marker.togglePopup();
+          });
+        }
+
+        // Fit the map to the bounds of all the pinpoints
+        map.fitBounds(bounds);
+      }
+
+      initMap();
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap" async defer></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet" />
   </main>
 
   <footer>

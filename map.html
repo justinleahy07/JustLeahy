@@ -135,6 +135,96 @@
         marker.options = { link: pinpoint.link };
       }
 
+      if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function (position) {
+    var userLocation = [position.coords.longitude, position.coords.latitude];
+    map.setCenter(userLocation);
+    // Add a marker for the user's location
+    new mapboxgl.Marker({ color: 'blue' })
+      .setLngLat(userLocation)
+      .addTo(map);
+  });
+}// Add geolocation control
+map.addControl(new mapboxgl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  trackUserLocation: true
+}));
+// Add distance measurement controls
+var distanceContainer = document.getElementById('distance');
+var distance = 0;
+
+map.on('load', function () {
+  map.addSource('distance', {
+    'type': 'geojson',
+    'data': {
+      'type': 'FeatureCollection',
+      'features': []
+    }
+  });
+
+  map.addLayer({
+    'id': 'distance-measure',
+    'type': 'line',
+    'source': 'distance',
+    'layout': {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+    'paint': {
+      'line-color': '#4183c4',
+      'line-opacity': 0.75,
+      'line-width': 5
+    }
+  });
+
+  map.on('click', function (e) {
+    var features = map.queryRenderedFeatures(e.point, { layers: ['distance-measure'] });
+
+    if (features.length) {
+      var lastFeature = features[features.length - 1];
+      distance += turf.distance(lastFeature.geometry.coordinates, e.lngLat);
+
+      var roundedDistance = Math.round(distance * 100) / 100;
+      distanceContainer.innerHTML = 'Total Distance: ' + roundedDistance + ' km';
+
+      var line = turf.lineString([
+        lastFeature.geometry.coordinates,
+        [e.lngLat.lng, e.lngLat.lat]
+      ]);
+
+      map.getSource('distance').setData(line);
+    }
+    else {
+      distanceContainer.innerHTML = '';
+      distance = 0;
+      map.getSource('distance').setData({
+        'type': 'FeatureCollection',
+        'features': []
+      });
+    }
+  });
+});
+// Add layer switching controls
+var layerList = document.getElementById('layer-list');
+var inputs = layerList.getElementsByTagName('input');
+
+function switchLayer(layer) {
+  var layerId = layer.target.id;
+  map.setStyle('mapbox://styles/mapbox/' + layerId);
+}
+
+for (var i = 0; i < inputs.length; i++) {
+  inputs[i].onclick = switchLayer;
+}
+// Add a search box
+var geocoder = new MapboxGeocoder({
+  accessToken: mapboxgl.accessToken,
+  mapboxgl: mapboxgl
+});
+document.getElementById('search-box').appendChild(geocoder.onAdd(map));
+
       // Fit the map to the bounds of all the pinpoints
       map.fitBounds(bounds);
     }

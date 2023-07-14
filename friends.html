@@ -100,7 +100,24 @@
       </div>
     </div>
 
+    <div id="filters">
+      <h3>Filter by:</h3>
+      <label>
+        <input type="checkbox" id="filter1" />
+        Filter 1
+      </label>
+      <label>
+        <input type="checkbox" id="filter2" />
+        Filter 2
+      </label>
+      <label>
+        <input type="checkbox" id="filter3" />
+        Filter 3
+      </label>
+    </div>
+
     <script>mapboxgl.accessToken = 'pk.eyJ1IjoianVzdGxlYWh5IiwiYSI6ImNsazJweDE5MjAyeGgzcnRqbGI4dzZuNzgifQ.gx_MnEM5M8x53NO0m1ZbdA';
+
 
 
      var pinpoints = [
@@ -449,7 +466,7 @@
   }
       
 ];
- var map = new mapboxgl.Map({
+var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-71.116253, 42.374595],
@@ -583,6 +600,59 @@
           map.flyTo({
             center: result.geometry.coordinates,
             zoom: 12
+          });
+        });
+
+        // Center the map on a combination of all points
+        var bounds = new mapboxgl.LngLatBounds();
+        pinpoints.forEach(function (pinpoint) {
+          bounds.extend(pinpoint.position.lng, pinpoint.position.lat);
+        });
+        map.fitBounds(bounds, { padding: 50 });
+
+        // Fit all points into the loaded map
+        map.setMaxBounds(bounds);
+
+        // Update the map when filters are changed
+        var filters = document.querySelectorAll('#filters input[type="checkbox"]');
+        filters.forEach(function (filter) {
+          filter.addEventListener('change', function () {
+            var activeFilters = Array.from(filters).filter(function (filter) {
+              return filter.checked;
+            }).map(function (filter) {
+              return filter.id;
+            });
+
+            var filteredFeatures = pinpoints.filter(function (pinpoint) {
+              // Customize the conditions based on your requirements and checkbox IDs
+              if (activeFilters.includes('filter1') && !pinpoint.meetsFilter1) {
+                return false;
+              }
+              if (activeFilters.includes('filter2') && !pinpoint.meetsFilter2) {
+                return false;
+              }
+              if (activeFilters.includes('filter3') && !pinpoint.meetsFilter3) {
+                return false;
+              }
+              return true;
+            });
+
+            map.getSource('markers').setData({
+              type: 'FeatureCollection',
+              features: filteredFeatures.map(function (pinpoint) {
+                return {
+                  type: 'Feature',
+                  geometry: {
+                    type: 'Point',
+                    coordinates: [pinpoint.position.lng, pinpoint.position.lat]
+                  },
+                  properties: {
+                    caption: pinpoint.caption,
+                    link: pinpoint.link
+                  }
+                };
+              })
+            });
           });
         });
       });

@@ -43,14 +43,26 @@
     <h1>Favorite Travels</h1>
     <!-- Rest of the map page content -->
     <div id="map"></div>
+    <div id="distance"></div>
+    <div id="layer-list">
+      <input type="radio" name="layers" id="streets-v11" checked />
+      <label for="streets-v11">Streets</label>
+      <input type="radio" name="layers" id="satellite-v9" />
+      <label for="satellite-v9">Satellite</label>
+      <input type="radio" name="layers" id="terrain-v11" />
+      <label for="terrain-v11">Terrain</label>
+    </div>
+    <div id="search-box"></div>
   </main>
 
- <footer>
+  <footer>
     <p>© Justin Leahy 2023 | JPL</p>
   </footer>
 
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css" />
 
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoianVzdGxlYWh5IiwiYSI6ImNsazJ2ZzFncTBqZmEzZ21zeWxiMjkwZDkifQ.g0O07Y_2aTIewM4s9k0CRQ';
@@ -136,94 +148,99 @@
       }
 
       if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(function (position) {
-    var userLocation = [position.coords.longitude, position.coords.latitude];
-    map.setCenter(userLocation);
-    // Add a marker for the user's location
-    new mapboxgl.Marker({ color: 'blue' })
-      .setLngLat(userLocation)
-      .addTo(map);
-  });
-}// Add geolocation control
-map.addControl(new mapboxgl.GeolocateControl({
-  positionOptions: {
-    enableHighAccuracy: true
-  },
-  trackUserLocation: true
-}));
-// Add distance measurement controls
-var distanceContainer = document.getElementById('distance');
-var distance = 0;
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var userLocation = [position.coords.longitude, position.coords.latitude];
+          map.setCenter(userLocation);
+          // Add a marker for the user's location
+          new mapboxgl.Marker({ color: 'blue' })
+            .setLngLat(userLocation)
+            .addTo(map);
+        });
+      }
 
-map.on('load', function () {
-  map.addSource('distance', {
-    'type': 'geojson',
-    'data': {
-      'type': 'FeatureCollection',
-      'features': []
-    }
-  });
+      // Add geolocation control
+      map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      }));
 
-  map.addLayer({
-    'id': 'distance-measure',
-    'type': 'line',
-    'source': 'distance',
-    'layout': {
-      'line-join': 'round',
-      'line-cap': 'round'
-    },
-    'paint': {
-      'line-color': '#4183c4',
-      'line-opacity': 0.75,
-      'line-width': 5
-    }
-  });
+      // Add distance measurement controls
+      var distanceContainer = document.getElementById('distance');
+      var distance = 0;
 
-  map.on('click', function (e) {
-    var features = map.queryRenderedFeatures(e.point, { layers: ['distance-measure'] });
+      map.on('load', function () {
+        map.addSource('distance', {
+          'type': 'geojson',
+          'data': {
+            'type': 'FeatureCollection',
+            'features': []
+          }
+        });
 
-    if (features.length) {
-      var lastFeature = features[features.length - 1];
-      distance += turf.distance(lastFeature.geometry.coordinates, e.lngLat);
+        map.addLayer({
+          'id': 'distance-measure',
+          'type': 'line',
+          'source': 'distance',
+          'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+          },
+          'paint': {
+            'line-color': '#4183c4',
+            'line-opacity': 0.75,
+            'line-width': 5
+          }
+        });
 
-      var roundedDistance = Math.round(distance * 100) / 100;
-      distanceContainer.innerHTML = 'Total Distance: ' + roundedDistance + ' km';
+        map.on('click', function (e) {
+          var features = map.queryRenderedFeatures(e.point, { layers: ['distance-measure'] });
 
-      var line = turf.lineString([
-        lastFeature.geometry.coordinates,
-        [e.lngLat.lng, e.lngLat.lat]
-      ]);
+          if (features.length) {
+            var lastFeature = features[features.length - 1];
+            distance += turf.distance(lastFeature.geometry.coordinates, e.lngLat);
 
-      map.getSource('distance').setData(line);
-    }
-    else {
-      distanceContainer.innerHTML = '';
-      distance = 0;
-      map.getSource('distance').setData({
-        'type': 'FeatureCollection',
-        'features': []
+            var roundedDistance = Math.round(distance * 100) / 100;
+            distanceContainer.innerHTML = 'Total Distance: ' + roundedDistance + ' km';
+
+            var line = turf.lineString([
+              lastFeature.geometry.coordinates,
+              [e.lngLat.lng, e.lngLat.lat]
+            ]);
+
+            map.getSource('distance').setData(line);
+          }
+          else {
+            distanceContainer.innerHTML = '';
+            distance = 0;
+            map.getSource('distance').setData({
+              'type': 'FeatureCollection',
+              'features': []
+            });
+          }
+        });
       });
-    }
-  });
-});
-// Add layer switching controls
-var layerList = document.getElementById('layer-list');
-var inputs = layerList.getElementsByTagName('input');
 
-function switchLayer(layer) {
-  var layerId = layer.target.id;
-  map.setStyle('mapbox://styles/mapbox/' + layerId);
-}
+      // Add layer switching controls
+      var layerList = document.getElementById('layer-list');
+      var inputs = layerList.getElementsByTagName('input');
 
-for (var i = 0; i < inputs.length; i++) {
-  inputs[i].onclick = switchLayer;
-}
-// Add a search box
-var geocoder = new MapboxGeocoder({
-  accessToken: mapboxgl.accessToken,
-  mapboxgl: mapboxgl
-});
-document.getElementById('search-box').appendChild(geocoder.onAdd(map));
+      function switchLayer(layer) {
+        var layerId = layer.target.id;
+        map.setStyle('mapbox://styles/mapbox/' + layerId);
+      }
+
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].onclick = switchLayer;
+      }
+
+      // Add a search box
+      var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      });
+      document.getElementById('search-box').appendChild(geocoder.onAdd(map));
 
       // Fit the map to the bounds of all the pinpoints
       map.fitBounds(bounds);
@@ -233,3 +250,4 @@ document.getElementById('search-box').appendChild(geocoder.onAdd(map));
   </script>
 </body>
 </html>
+

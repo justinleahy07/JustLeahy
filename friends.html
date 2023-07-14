@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
     gtag('js', new Date());
 
     gtag('config', 'G-SFH8SW31QP');
@@ -14,14 +18,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <title>Justin Leahy - Map</title>
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js"></script>
-  <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css" type="text/css" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-markercluster/v1.4.0/mapbox-gl-markercluster.min.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-markercluster/v1.4.0/mapbox-gl-markercluster.css" rel="stylesheet" />
   <style>
     .mapboxgl-popup-content {
       color: black;
     }
+
+    #search-input {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .mapboxgl-popup {
+      max-width: 200px;
+      font-family: Arial, sans-serif;
+    }
+
+    .mapboxgl-popup-content {
+      padding: 10px;
+    }
+
+    .mapboxgl-popup-content h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    .mapboxgl-popup-content p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
   </style>
 </head>
+
 <body>
 
   <header>
@@ -38,13 +76,11 @@
             <ul class="dropdown">
               <li><a href="landscape.html">Landscape</a></li>
               <li><a href="portrait.html">Portrait</a></li>
-                            <li><a href="wildlife.html">Wildlife</a></li>
-
+              <li><a href="wildlife.html">Wildlife</a></li>
             </ul>
           </li>
           <li><a href="about.html">About</a></li>
-                    <li><a href="map.html">Map</a></li>
-
+          <li><a href="map.html">Map</a></li>
         </ul>
       </div>
     </nav>
@@ -55,6 +91,14 @@
     <h1>Where Friends Attend College</h1>
     <!-- Rest of the map page content -->
     <div id="map"></div>
+    <input id="search-input" type="text" placeholder="Search for a location" />
+
+    <div id="info-window" class="mapboxgl-popup">
+      <div class="mapboxgl-popup-content">
+        <h3 id="info-window-title"></h3>
+        <p id="info-window-description"></p>
+      </div>
+    </div>
 
     <script>mapboxgl.accessToken = 'pk.eyJ1IjoianVzdGxlYWh5IiwiYSI6ImNsazJweDE5MjAyeGgzcnRqbGI4dzZuNzgifQ.gx_MnEM5M8x53NO0m1ZbdA';
 
@@ -405,50 +449,142 @@
   }
       
 ];
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-71.116253, 42.374595], // Adjust the center coordinates as per your preference
-    zoom: 10 // Adjust the zoom level as per your preference
-  });
-
-  var popup = new mapboxgl.Popup({
-    closeButton: false,
-    closeOnClick: false
-  });
-
-  map.on('load', function() {
-    var bounds = new mapboxgl.LngLatBounds();
-
-    for (var i = 0; i < pinpoints.length; i++) {
-      var pinpoint = pinpoints[i];
-
-      var marker = new mapboxgl.Marker()
-        .setLngLat(pinpoint.position)
-        .addTo(map);
-
-      bounds.extend(marker.getLngLat());
-
-      marker.getElement().addEventListener('mouseenter', function() {
-        var caption = this.getAttribute('data-caption');
-        var coordinates = this.getAttribute('data-coordinates').split(',');
-
-        popup.setLngLat(coordinates)
-          .setHTML('<h3>' + caption + '</h3><p>Description here</p>')
-          .addTo(map);
+ var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-71.116253, 42.374595],
+        zoom: 10
       });
 
-      marker.getElement().addEventListener('mouseleave', function() {
-        popup.remove();
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
       });
 
-      marker.getElement().setAttribute('data-caption', pinpoint.caption);
-      marker.getElement().setAttribute('data-coordinates', pinpoint.position.lng + ',' + pinpoint.position.lat);
-    }
+      var infoWindow = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        anchor: 'top',
+        offset: [0, -20]
+      });
 
-    map.fitBounds(bounds, {
-      padding: 50
-    });
+      var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      });
+
+      map.on('load', function () {
+        map.addSource('markers', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: pinpoints.map(function (pinpoint) {
+              return {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [pinpoint.position.lng, pinpoint.position.lat]
+                },
+                properties: {
+                  caption: pinpoint.caption,
+                  link: pinpoint.link
+                }
+              };
+            })
+          },
+          cluster: true,
+          clusterRadius: 50
+        });
+
+        map.addLayer({
+          id: 'clusters',
+          type: 'circle',
+          source: 'markers',
+          filter: ['has', 'point_count'],
+          paint: {
+            'circle-color': '#FF5722',
+            'circle-radius': 18
+          }
+        });
+
+        map.addLayer({
+          id: 'cluster-count',
+          type: 'symbol',
+          source: 'markers',
+          filter: ['has', 'point_count'],
+          layout: {
+            'text-field': '{point_count_abbreviated}',
+            'text-size': 12
+          },
+          paint: {
+            'text-color': '#FFFFFF'
+          }
+        });
+
+        map.addLayer({
+          id: 'unclustered-point',
+          type: 'circle',
+          source: 'markers',
+          filter: ['!', ['has', 'point_count']],
+          paint: {
+            'circle-color': '#FF9800',
+            'circle-radius': 10,
+            'circle-stroke-width': 2,
+            'circle-stroke-color': '#FFFFFF'
+          }
+        });
+
+        map.on('mouseenter', 'clusters', function () {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'clusters', function () {
+          map.getCanvas().style.cursor = '';
+        });
+
+        map.on('click', 'clusters', function (e) {
+          var features = map.queryRenderedFeatures(e.point, {
+            layers: ['clusters']
+          });
+          var clusterId = features[0].properties.cluster_id;
+          map.getSource('markers').getClusterExpansionZoom(clusterId, function (err, zoom) {
+            if (err) return;
+
+            map.easeTo({
+              center: features[0].geometry.coordinates,
+              zoom: zoom
+            });
+          });
+        });
+
+        map.on('click', 'unclustered-point', function (e) {
+          var feature = e.features[0];
+          var coordinates = feature.geometry.coordinates.slice();
+          var caption = feature.properties.caption;
+          var link = feature.properties.link;
+
+          infoWindow.setLngLat(coordinates)
+            .setHTML('<h3>' + caption + '</h3><p>Description here</p>')
+            .addTo(map);
+        });
+
+        map.on('mouseenter', 'unclustered-point', function () {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', 'unclustered-point', function () {
+          map.getCanvas().style.cursor = '';
+        });
+
+        map.addControl(geocoder);
+
+        geocoder.on('result', function (e) {
+          var result = e.result;
+          map.flyTo({
+            center: result.geometry.coordinates,
+            zoom: 12
+          });
+        });
       });
     </script>
   </main>
@@ -458,4 +594,5 @@ var map = new mapboxgl.Map({
   </footer>
 
 </body>
+
 </html>

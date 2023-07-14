@@ -43,26 +43,14 @@
     <h1>Favorite Travels</h1>
     <!-- Rest of the map page content -->
     <div id="map"></div>
-    <div id="distance"></div>
-    <div id="layer-list">
-      <input type="radio" name="layers" id="streets-v11" checked />
-      <label for="streets-v11">Streets</label>
-      <input type="radio" name="layers" id="satellite-v9" />
-      <label for="satellite-v9">Satellite</label>
-      <input type="radio" name="layers" id="terrain-v11" />
-      <label for="terrain-v11">Terrain</label>
-    </div>
-    <div id="search-box"></div>
   </main>
 
-  <footer>
+ <footer>
     <p>© Justin Leahy 2023 | JPL</p>
   </footer>
 
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet" />
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css" />
 
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoianVzdGxlYWh5IiwiYSI6ImNsazJ2ZzFncTBqZmEzZ21zeWxiMjkwZDkifQ.g0O07Y_2aTIewM4s9k0CRQ';
@@ -131,16 +119,17 @@
           .addTo(map);
 
         // Add an event listener to redirect to the specified page when the marker is clicked
-        marker.getElement().addEventListener('click', function (e) {
+        marker.getElement().addEventListener('click', function () {
           window.location.href = this.options.link;
         });
 
         // Add an event listener to show the caption when hovering over the marker
-        marker.getElement().addEventListener('mouseenter', function (e) {
-          this.togglePopup();
+        marker.getElement().addEventListener('mouseenter', function () {
+          this._popup.toggle();
         });
-        marker.getElement().addEventListener('mouseleave', function (e) {
-          this.togglePopup();
+
+        marker.getElement().addEventListener('mouseleave', function () {
+          this._popup.toggle();
         });
 
         // Store the link in the marker's options for access inside the event listener
@@ -167,8 +156,36 @@
       }));
 
       // Add distance measurement controls
-      var distanceContainer = document.getElementById('distance');
+      var distanceContainer = document.createElement('div');
+      distanceContainer.className = 'distance-container';
+      document.body.appendChild(distanceContainer);
       var distance = 0;
+
+      map.on('click', function (e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ['distance-measure'] });
+
+        if (features.length) {
+          var lastFeature = features[features.length - 1];
+          distance += turf.distance(lastFeature.geometry.coordinates, e.lngLat);
+
+          var roundedDistance = Math.round(distance * 100) / 100;
+          distanceContainer.innerHTML = 'Total Distance: ' + roundedDistance + ' km';
+
+          var line = turf.lineString([
+            lastFeature.geometry.coordinates,
+            [e.lngLat.lng, e.lngLat.lat]
+          ]);
+
+          map.getSource('distance').setData(line);
+        } else {
+          distanceContainer.innerHTML = '';
+          distance = 0;
+          map.getSource('distance').setData({
+            'type': 'FeatureCollection',
+            'features': []
+          });
+        }
+      });
 
       map.on('load', function () {
         map.addSource('distance', {
@@ -191,33 +208,6 @@
             'line-color': '#4183c4',
             'line-opacity': 0.75,
             'line-width': 5
-          }
-        });
-
-        map.on('click', function (e) {
-          var features = map.queryRenderedFeatures(e.point, { layers: ['distance-measure'] });
-
-          if (features.length) {
-            var lastFeature = features[features.length - 1];
-            distance += turf.distance(lastFeature.geometry.coordinates, e.lngLat);
-
-            var roundedDistance = Math.round(distance * 100) / 100;
-            distanceContainer.innerHTML = 'Total Distance: ' + roundedDistance + ' km';
-
-            var line = turf.lineString([
-              lastFeature.geometry.coordinates,
-              [e.lngLat.lng, e.lngLat.lat]
-            ]);
-
-            map.getSource('distance').setData(line);
-          }
-          else {
-            distanceContainer.innerHTML = '';
-            distance = 0;
-            map.getSource('distance').setData({
-              'type': 'FeatureCollection',
-              'features': []
-            });
           }
         });
       });

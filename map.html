@@ -1,14 +1,6 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-<head><!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SFH8SW31QP');
-</script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
@@ -16,17 +8,6 @@
   <style>
     .mapboxgl-popup-content {
       color: black;
-    }
-    #search-box {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1;
-      background-color: white;
-      padding: 10px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
@@ -65,7 +46,7 @@
     <div id="search-box"></div>
   </main>
 
- <footer>
+  <footer>
     <p>© Justin Leahy 2023 | JPL</p>
   </footer>
 
@@ -76,7 +57,7 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoianVzdGxlYWh5IiwiYSI6ImNsazJ2ZzFncTBqZmEzZ21zeWxiMjkwZDkifQ.g0O07Y_2aTIewM4s9k0CRQ';
 
     function initMap() {
-      // Define an array of pinpoints with their coordinates and captions
+      // Define an array of pinpoints with their coordinates, captions, and links
       var pinpoints = [
         {
           position: { lat: 33.8734, lng: -115.9010 },
@@ -110,30 +91,23 @@
         }
       ];
 
-      // Calculate the geographical bounds that fit all the pinpoints
+      // Calculate the geographical bounds of the pinpoints
       var bounds = new mapboxgl.LngLatBounds();
       for (var i = 0; i < pinpoints.length; i++) {
         bounds.extend([pinpoints[i].position.lng, pinpoints[i].position.lat]);
       }
 
-      // Create a map centered and fitted to the pinpoints
+      // Create a map centered at the geographical center of the pinpoints
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         fitBounds: bounds,
         maxBounds: bounds,
-        maxZoom: 10 // Adjust the maxZoom level as per your preference
+        zoom: 10 // Adjust the zoom level as per your preference
       });
 
       // Add navigation controls to the map
       map.addControl(new mapboxgl.NavigationControl());
-
-      // Add search box
-      var geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl
-      });
-      document.getElementById('search-box').appendChild(geocoder.onAdd(map));
 
       // Iterate through the pinpoints array and add markers to the map
       for (var i = 0; i < pinpoints.length; i++) {
@@ -142,7 +116,8 @@
         // Create a marker with the specified position
         var marker = new mapboxgl.Marker()
           .setLngLat([pinpoint.position.lng, pinpoint.position.lat])
-          .setPopup(new mapboxgl.Popup().setHTML('<div><h3>' + pinpoint.caption + '</h3><p>Description here</p></div>'))
+          .setPopup(new mapboxgl.Popup({ offset: 25 })
+            .setHTML('<div><h3>' + pinpoint.caption + '</h3><p>Description here</p></div>'))
           .addTo(map);
 
         // Add an event listener to redirect to the specified page when the marker is clicked
@@ -162,6 +137,32 @@
         // Store the link in the marker's options for access inside the event listener
         marker.options = { link: pinpoint.link };
       }
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var userLocation = [position.coords.longitude, position.coords.latitude];
+          map.setCenter(userLocation);
+          // Add a marker for the user's location
+          new mapboxgl.Marker({ color: 'blue' })
+            .setLngLat(userLocation)
+            .addTo(map);
+        });
+      }
+
+      // Add geolocation control
+      map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      }));
+
+      // Add a search box
+      var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      });
+      document.getElementById('search-box').appendChild(geocoder.onAdd(map));
     }
 
     initMap();

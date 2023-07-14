@@ -40,7 +40,7 @@
     <div id="map"></div>
   </main>
 
-  <footer>
+ <footer>
     <p>© Justin Leahy 2023 | JPL</p>
   </footer>
 
@@ -115,16 +115,19 @@
 
         // Add an event listener to redirect to the specified page when the marker is clicked
         marker.getElement().addEventListener('click', function (e) {
-          window.location.href = pinpoint.link;
+          window.location.href = this.options.link;
         });
 
         // Add an event listener to show the caption when hovering over the marker
         marker.getElement().addEventListener('mouseenter', function (e) {
-          marker.getPopup().addTo(map);
+          this.togglePopup();
         });
         marker.getElement().addEventListener('mouseleave', function (e) {
-          marker.getPopup().remove();
+          this.togglePopup();
         });
+
+        // Store the link in the marker's options for access inside the event listener
+        marker.options = { link: pinpoint.link };
       }
 
       // Fit the map to the bounds of all the pinpoints
@@ -135,4 +138,3 @@
   </script>
 </body>
 </html>
-

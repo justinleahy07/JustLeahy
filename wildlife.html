@@ -235,6 +235,7 @@
       <input type="password" id="password-input" style="margin-bottom: 10px;">
       <br>
       <button onclick="checkPassword()">Submit</button>
+      <button onclick="redirectToLandscape()">Incorrect password, Redirect to Landscape</button>
     </div>
   </div>
 
@@ -251,8 +252,11 @@
         alert('Incorrect password. Please try again.');
       }
     }
+
+    function redirectToLandscape() {
+      window.location.href = 'justleahy.com/landscape.html';
+    }
   </script>
 </body>
 </html>
-
 

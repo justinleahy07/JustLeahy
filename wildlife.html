@@ -65,7 +65,6 @@
 
     main {
       padding: 20px;
-      display: none; /* Initially hide the main content */
     }
 
     footer {
@@ -127,36 +126,6 @@
     .caption p {
       margin-bottom: 5px;
     }
-
-    .password-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .password-form {
-      background-color: white;
-      padding: 20px;
-      border-radius: 5px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .password-form input[type="password"] {
-      margin-bottom: 10px;
-    }
-
-    .password-form button {
-      padding: 5px 10px;
-    }
   </style>
   <title>Justin Leahy - Portfolio</title>
 </head>
@@ -185,14 +154,7 @@
     </nav>
   </header>
 
-  <main id="portfolio">
-    <div class="password-overlay">
-      <div class="password-form">
-        <h2>Enter the Password</h2>
-        <input type="password" id="password-input">
-        <button onclick="checkPassword()">Submit</button>
-      </div>
-    </div>
+  <main id="portfolio" style="display: none;">
     <h1>Wildlife Portfolio</h1>
     <section class="photo-grid">
       <div class="row">
@@ -269,9 +231,10 @@
   </footer>
 
   <script>
+    var password = 'NOCA'; // Replace with your desired password
+
     function checkPassword() {
       var passwordInput = document.getElementById('password-input').value;
-      var password = 'NOCA'; // Replace with your desired password
 
       if (passwordInput === password) {
         document.querySelector('.password-overlay').style.display = 'none';

@@ -1,18 +1,19 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-<head><!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFH8SW31QP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-SFH8SW31QP');
-</script>
+    gtag('config', 'G-SFH8SW31QP');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-<style>
+  <style>
     /* Reset CSS */
     * {
       margin: 0;
@@ -77,68 +78,118 @@
       margin: 0;
     }
 
-    
-
     .row {
       display: flex;
       flex-wrap: wrap;
       margin: 0 -20px;
     }
 
-   .photo {
-  position: relative;
-  flex: 0 0 calc(33.33% - 40px);
-  margin: 20px;
-  overflow: hidden;
-  border: none;
-  height: 300px;
-  width: 450px;
-}
+    .photo {
+      position: relative;
+      flex: 0 0 calc(33.33% - 40px);
+      margin: 20px;
+      overflow: hidden;
+      border: none;
+      height: 300px;
+      width: 450px;
+    }
 
-.photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .photo:hover .overlay {
+      opacity: 1;
+    }
+
+    .caption {
+      text-align: center;
+    }
+
+    .caption p {
+      margin-bottom: 5px;
+    }
   </style>
-
-
   <title>Justin Leahy - Portfolio</title>
 </head>
 <body>
-  <header>
-  <nav>
-    <div class="header-left">
-      <div class="logo">
-        <a href="index.html">Justin Leahy</a>
+ <header>
+    <nav>
+      <div class="header-left">
+        <div class="logo">
+          <a href="index.html">Justin Leahy</a>
+        </div>
       </div>
-    </div>
-    <div class="header-right">
-      <ul class="menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a>Portfolio</a>
-          <ul class="dropdown">
-            <li><a href="landscape.html">Landscape</a></li>
-            <li><a href="portrait.html">Portrait</a></li>
-                        <li><a href="wildlife.html">Wildlife</a></li>
-
-          </ul>
-        </li>
-        <li><a href="about.html">About</a></li>
-                            <li><a href="map.html">Map</a></li>
-
-      </ul>
-    </div>
-  </nav>
-</header>
-  <main id="portfolio">
+      <div class="header-right">
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a>Portfolio</a>
+            <ul class="dropdown">
+              <li><a href="landscape.html">Landscape</a></li>
+              <li><a href="portrait.html">Portrait</a></li>
+              <li><a href="wildlife.html">Wildlife</a></li>
+            </ul>
+          </li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="map.html">Map</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main id="portfolio" style="display: none;">
     <h1>Portrait Portfolio</h1>
     <section class="photo-grid">
       <br> <h2><strong><em>Coming Soon</em></strong></h2>
     </section>
   </main>
-  <footer>
+    <footer>
     <p>© Justin Leahy 2023 | JPL</p>
   </footer>
+
+  <div class="password-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center;">
+    <div style="background-color: #fff; padding: 20px; text-align: center;">
+      <h2>Enter Password</h2>
+      <input type="password" id="password-input" style="margin-bottom: 10px;">
+      <br>
+      <button onclick="checkPassword()">Submit</button>
+      <button onclick="redirectToLandscape()">Incorrect password, Redirect to Landscape</button>
+    </div>
+  </div>
+
+  <script>
+    var password = 'NOCA'; // Replace with your desired password
+
+    function checkPassword() {
+      var passwordInput = document.getElementById('password-input').value;
+
+      if (passwordInput === password) {
+        document.querySelector('.password-overlay').style.display = 'none';
+        document.getElementById('portfolio').style.display = 'block'; // Show the main content
+      } else {
+        alert('Incorrect password. Please try again.');
+      }
+    }
+
+    function redirectToLandscape() {
+      window.location.href = 'justleahy.com/landscape.html';
+    }
+  </script>
 </body>
 </html>

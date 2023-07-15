@@ -130,7 +130,7 @@
   <title>Justin Leahy - Portfolio</title>
 </head>
 <body>
-  <header>
+ <header>
     <nav>
       <div class="header-left">
         <div class="logo">
@@ -154,7 +154,7 @@
     </nav>
   </header>
 
-  <main id="portfolio" style="display: none;">
+<main id="portfolio" style="display: none;">
     <h1>Wildlife Portfolio</h1>
     <section class="photo-grid">
       <div class="row">
@@ -225,10 +225,18 @@
       <br>
     </section>
   </main>
-
   <footer>
     <p>© Justin Leahy 2023 | JPL</p>
   </footer>
+
+  <div class="password-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center;">
+    <div style="background-color: #fff; padding: 20px; text-align: center;">
+      <h2>Enter Password</h2>
+      <input type="password" id="password-input" style="margin-bottom: 10px;">
+      <br>
+      <button onclick="checkPassword()">Submit</button>
+    </div>
+  </div>
 
   <script>
     var password = 'NOCA'; // Replace with your desired password

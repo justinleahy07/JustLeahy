@@ -14,6 +14,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <title>Justin Leahy - Map</title>
+  <style>
+    #map {
+      height: 500px;
+    }
+  </style>
 </head>
 <body>
 
@@ -31,13 +36,11 @@
             <ul class="dropdown">
               <li><a href="landscape.html">Landscape</a></li>
               <li><a href="portrait.html">Portrait</a></li>
-                            <li><a href="wildlife.html">Wildlife</a></li>
-
+              <li><a href="wildlife.html">Wildlife</a></li>
             </ul>
           </li>
           <li><a href="about.html">About</a></li>
-                    <li><a href="map.html">Map</a></li>
-
+          <li><a href="map.html">Map</a></li>
         </ul>
       </div>
     </nav>
@@ -51,107 +54,149 @@
 
     <script>
       function initMap() {
-  // Define an array of pinpoints with their coordinates and captions
-  var pinpoints = [
-  {
-    position: { lat: 33.8734, lng: -115.9010 },
-    caption: 'Joshua Tree National Park',
-    link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
-  },
-  {
-    position: { lat: 51.1784, lng: -115.5708 },
-    caption: 'Canadian Rockies',
-    link: 'canadianrockies.html' // Replace with the link to the page with photos taken at this location
-  },{
-    position: { lat: 35.35486, lng: -82.990414 },
-    caption: 'Blue Ridge Mountains',
-    link: 'blueridge.html' // Replace with the link to the page with photos taken at this location
-  },{
-    position: { lat: 40.424939, lng: -105.756965 },
-    caption: 'Rocky Mountain National Park',
-    link: 'rockymountain.html' // Replace with the link to the page with photos taken at this location
-  },{
-    position: { lat: 38.189466, lng: -109.887094 },
-    caption: 'Canyonlands National Park',
-    link: 'canyonlands.html' // Replace with the link to the page with photos taken at this location
-  },{
-    position: { lat: 19.294957, lng: -155.098257 },
-    caption: 'Hawaii Volcanoes National Park',
-    link: 'hawaiivolcanoes.html' // Replace with the link to the page with photos taken at this location
-  },
-      
-];
+        // Define an array of pinpoints with their coordinates and captions
+        var pinpoints = [
+          {
+            position: { lat: 33.8734, lng: -115.9010 },
+            caption: 'Joshua Tree National Park',
+            link: 'joshuatree.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 51.1784, lng: -115.5708 },
+            caption: 'Canadian Rockies',
+            link: 'canadianrockies.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 35.35486, lng: -82.990414 },
+            caption: 'Blue Ridge Mountains',
+            link: 'blueridge.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 40.424939, lng: -105.756965 },
+            caption: 'Rocky Mountain National Park',
+            link: 'rockymountain.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 38.189466, lng: -109.887094 },
+            caption: 'Canyonlands National Park',
+            link: 'canyonlands.html' // Replace with the link to the page with photos taken at this location
+          },
+          {
+            position: { lat: 19.294957, lng: -155.098257 },
+            caption: 'Hawaii Volcanoes National Park',
+            link: 'hawaiivolcanoes.html' // Replace with the link to the page with photos taken at this location
+          }
+        ];
 
+        // Calculate the geographical center of the pinpoints
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < pinpoints.length; i++) {
+          bounds.extend(pinpoints[i].position);
+        }
+        var center = bounds.getCenter();
 
-  // Calculate the geographical center of the pinpoints
-  var bounds = new google.maps.LatLngBounds();
-  for (var i = 0; i < pinpoints.length; i++) {
-    bounds.extend(pinpoints[i].position);
-  }
-  var center = bounds.getCenter();
-
-  // Create a map centered at the geographical center of the pinpoints
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: center,
-    zoom: 10, // Adjust the zoom level as per your preference
-    zoomControl: true, // Enable zoom controls
-    mapTypeControl: true, // Enable map type controls
-    fullscreenControl: true // Enable fullscreen control
-  });
-
-  // Apply custom styles to the map
-  map.setOptions({
-    styles: [
-      {
-        featureType: 'water',
-        elementType: 'geometry',
-        stylers: [{ color: '#c9c9c9' }]
-      },
-      {
-        featureType: 'landscape',
-        elementType: 'geometry',
-        stylers: [{ color: '#f2f2f2' }]
-      },
-      // Add more custom styles as per your preference
-    ]
-  });
-
-  // Iterate through the pinpoints array and add markers to the map
-  for (var i = 0; i < pinpoints.length; i++) {
-    var pinpoint = pinpoints[i];
-
-    // Create a marker with the specified position
-    var marker = new google.maps.Marker({
-      position: pinpoint.position,
-      map: map,
-      title: pinpoint.caption
-    });
-
-    // Add an event listener to redirect to the specified page when the marker is clicked
-    marker.addListener('click', function(pinpoint) {
-      return function() {
-        window.location.href = pinpoint.link;
-      };
-    }(pinpoint));
-
-    // Add an info window to display the caption when the marker is clicked
-    marker.addListener('click', function(pinpoint) {
-      return function() {
-        var infowindow = new google.maps.InfoWindow({
-          content: '<div><h3>' + pinpoint.caption + '</h3><p>Description here</p></div>'
+        // Create a map centered at the geographical center of the pinpoints
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: center,
+          zoom: 10, // Adjust the zoom level as per your preference
+          zoomControl: true, // Enable zoom controls
+          mapTypeControl: true, // Enable map type controls
+          fullscreenControl: true // Enable fullscreen control
         });
-        infowindow.open(map, marker);
-      };
-    }(pinpoint));
-  }
 
-  // Fit the map to the bounds of all the pinpoints
-  map.fitBounds(bounds);
-}
+        // Apply custom styles to the map
+        map.setOptions({
+          styles: [
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{ color: '#c9c9c9' }]
+            },
+            {
+              featureType: 'landscape',
+              elementType: 'geometry',
+              stylers: [{ color: '#f2f2f2' }]
+            },
+            // Add more custom styles as per your preference
+          ]
+        });
 
-      
+        // Iterate through the pinpoints array and add markers to the map
+        for (var i = 0; i < pinpoints.length; i++) {
+          var pinpoint = pinpoints[i];
+
+          // Create a marker with the specified position
+          var marker = new google.maps.Marker({
+            position: pinpoint.position,
+            map: map,
+            title: pinpoint.caption
+          });
+
+          // Add an event listener to redirect to the specified page when the marker is clicked
+          marker.addListener('click', function (pinpoint) {
+            return function () {
+              window.location.href = pinpoint.link;
+            };
+          }(pinpoint));
+
+          // Add an info window to display the caption when the marker is clicked
+          marker.addListener('click', function (pinpoint) {
+            return function () {
+              var infowindow = new google.maps.InfoWindow({
+                content: '<div><h3>' + pinpoint.caption + '</h3><p>Description here</p></div>'
+              });
+              infowindow.open(map, marker);
+            };
+          }(pinpoint));
+        }
+
+        // Create a map type control to switch between satellite and street view
+        var mapTypeControlDiv = document.createElement('div');
+        var mapTypeControl = new MapTypeControl(mapTypeControlDiv, map);
+        mapTypeControlDiv.index = 1; // Position the control on top of other controls
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(mapTypeControlDiv);
+      }
+
+      // Custom control to switch between map types
+      function MapTypeControl(controlDiv, map) {
+        // Set CSS for the control border
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginTop = '10px';
+        controlUI.style.marginRight = '10px';
+        controlUI.style.textAlign = 'center';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '14px';
+        controlText.style.lineHeight = '30px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = '<b>Satellite</b>';
+        controlUI.appendChild(controlText);
+
+        // Switch between map types on click
+        var isSatellite = false;
+        controlUI.addEventListener('click', function () {
+          if (isSatellite) {
+            map.setMapTypeId('roadmap');
+            controlText.innerHTML = '<b>Satellite</b>';
+          } else {
+            map.setMapTypeId('satellite');
+            controlText.innerHTML = '<b>Street</b>';
+          }
+          isSatellite = !isSatellite;
+        });
+      }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap" async defer></script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap" async defer>
   </main>
 
   <footer>
@@ -160,3 +205,4 @@
 
 </body>
 </html>
+

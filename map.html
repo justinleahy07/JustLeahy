@@ -127,11 +127,11 @@
 
         // Add an event listener to show the caption when hovering over the marker
         marker.getElement().addEventListener('mouseenter', function () {
-          this._popup.toggle();
+          this._popup.addTo(map);
         });
 
         marker.getElement().addEventListener('mouseleave', function () {
-          this._popup.toggle();
+          this._popup.remove();
         });
 
         // Store the link in the marker's options for access inside the event listener
@@ -169,5 +169,6 @@
   </script>
 </body>
 </html>
+
 
 

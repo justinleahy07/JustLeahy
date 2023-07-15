@@ -1,3 +1,4 @@
+de
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,14 +30,8 @@
       color: black;
     }
 
-    #search-input {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 1;
-      width: 300px;
-      padding: 10px;
-      font-size: 16px;
+    #map {
+      height: 400px; /* Adjust the height of the map container */
     }
 
     .mapboxgl-popup {
@@ -91,7 +86,6 @@
     <h1>Where Friends Attend College</h1>
     <!-- Rest of the map page content -->
     <div id="map"></div>
-    <input id="search-input" type="text" placeholder="Search for a location" />
 
     <div id="info-window" class="mapboxgl-popup">
       <div class="mapboxgl-popup-content">
@@ -114,6 +108,11 @@
         <input type="checkbox" id="filter3" />
         Filter 3
       </label>
+    </div>
+
+    <div id="map-controls">
+      <button id="toggle-view">Toggle View</button>
+      <div id="scale-bar"></div>
     </div>
 
     <script>mapboxgl.accessToken = 'pk.eyJ1IjoianVzdGxlYWh5IiwiYSI6ImNsazJweDE5MjAyeGgzcnRqbGI4dzZuNzgifQ.gx_MnEM5M8x53NO0m1ZbdA';
@@ -469,8 +468,8 @@
 var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-71.116253, 42.374595],
-        zoom: 10
+        center: [-98.5795, 39.8283], // Center the map based on all pinpoints
+        zoom: 3 // Adjust the zoom level as per your preference
       });
 
       var popup = new mapboxgl.Popup({
@@ -483,11 +482,6 @@ var map = new mapboxgl.Map({
         closeOnClick: false,
         anchor: 'top',
         offset: [0, -20]
-      });
-
-      var geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl
       });
 
       map.on('load', function () {
@@ -593,26 +587,6 @@ var map = new mapboxgl.Map({
           map.getCanvas().style.cursor = '';
         });
 
-        map.addControl(geocoder);
-
-        geocoder.on('result', function (e) {
-          var result = e.result;
-          map.flyTo({
-            center: result.geometry.coordinates,
-            zoom: 12
-          });
-        });
-
-        // Center the map on a combination of all points
-        var bounds = new mapboxgl.LngLatBounds();
-        pinpoints.forEach(function (pinpoint) {
-          bounds.extend(pinpoint.position.lng, pinpoint.position.lat);
-        });
-        map.fitBounds(bounds, { padding: 50 });
-
-        // Fit all points into the loaded map
-        map.setMaxBounds(bounds);
-
         // Update the map when filters are changed
         var filters = document.querySelectorAll('#filters input[type="checkbox"]');
         filters.forEach(function (filter) {
@@ -654,6 +628,24 @@ var map = new mapboxgl.Map({
               })
             });
           });
+        });
+
+        // Add map controls
+        map.addControl(new mapboxgl.NavigationControl());
+        map.addControl(new mapboxgl.ScaleControl({
+          maxWidth: 120,
+          unit: 'imperial' // Adjust the unit as per your preference
+        }));
+
+        // Toggle between street and satellite view
+        var toggleViewButton = document.getElementById('toggle-view');
+        toggleViewButton.addEventListener('click', function () {
+          var currentStyle = map.getStyle();
+          if (currentStyle.name === 'Mapbox Streets') {
+            map.setStyle('mapbox://styles/mapbox/satellite-streets-v11');
+          } else {
+            map.setStyle('mapbox://styles/mapbox/streets-v11');
+          }
         });
       });
     </script>

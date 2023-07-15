@@ -88,38 +88,16 @@
           }
         ];
 
-        // Calculate the geographical center of the pinpoints
-        var bounds = new google.maps.LatLngBounds();
-        for (var i = 0; i < pinpoints.length; i++) {
-          bounds.extend(pinpoints[i].position);
-        }
-        var center = bounds.getCenter();
-
-        // Create a map centered at the geographical center of the pinpoints
+        // Create a map centered at the first pinpoint
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: center,
           zoom: 10, // Adjust the zoom level as per your preference
           zoomControl: true, // Enable zoom controls
           mapTypeControl: true, // Enable map type controls
           fullscreenControl: true // Enable fullscreen control
         });
 
-        // Apply custom styles to the map
-        map.setOptions({
-          styles: [
-            {
-              featureType: 'water',
-              elementType: 'geometry',
-              stylers: [{ color: '#c9c9c9' }]
-            },
-            {
-              featureType: 'landscape',
-              elementType: 'geometry',
-              stylers: [{ color: '#f2f2f2' }]
-            },
-            // Add more custom styles as per your preference
-          ]
-        });
+        // Create a LatLngBounds object to encapsulate all the pinpoints
+        var bounds = new google.maps.LatLngBounds();
 
         // Iterate through the pinpoints array and add markers to the map
         for (var i = 0; i < pinpoints.length; i++) {
@@ -131,6 +109,9 @@
             map: map,
             title: pinpoint.caption
           });
+
+          // Extend the bounds with each pinpoint's position
+          bounds.extend(pinpoint.position);
 
           // Add an event listener to redirect to the specified page when the marker is clicked
           marker.addListener('click', function (pinpoint) {
@@ -149,6 +130,26 @@
             };
           }(pinpoint));
         }
+
+        // Fit the map to the bounds
+        map.fitBounds(bounds);
+
+        // Apply custom styles to the map
+        map.setOptions({
+          styles: [
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{ color: '#c9c9c9' }]
+            },
+            {
+              featureType: 'landscape',
+              elementType: 'geometry',
+              stylers: [{ color: '#f2f2f2' }]
+            },
+            // Add more custom styles as per your preference
+          ]
+        });
 
         // Create a map type control to switch between satellite and street view
         var mapTypeControlDiv = document.createElement('div');
@@ -195,10 +196,9 @@
           isSatellite = !isSatellite;
         });
       }
- </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSLLXw_qWo67DaC26G1caMljQ6QE5IVk&callback=initMap" async defer></script>
+    </script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
   </main>
-
 
   <footer>
     <p>© Justin Leahy 2023 | JPL</p>
